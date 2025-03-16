@@ -1,0 +1,11 @@
+<svg width="550" height="550" viewBox="0 0 550 550" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="550" height="550" rx="16" fill="#E2E8F0"/>
+  <rect x="80" y="60" width="390" height="230" rx="8" fill="#CBD5E1"/>
+  <rect x="80" y="310" width="180" height="60" rx="8" fill="#94A3B8"/>
+  <rect x="290" y="310" width="180" height="60" rx="8" fill="#94A3B8"/>
+  <rect x="80" y="390" width="390" height="40" rx="8" fill="#94A3B8"/>
+  <rect x="80" y="450" width="390" height="40" rx="8" fill="#94A3B8"/>
+  <circle cx="460" cy="150" r="40" fill="#3B82F6"/>
+  <text x="275" y="275" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="#475569">Schoolgle Dashboard</text>
+  <text x="275" y="155" font-family="Arial" font-size="16" text-anchor="middle" fill="#475569">Teacher AI Tools and Analytics</text>
+</svg>
