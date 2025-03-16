@@ -1,7 +1,7 @@
 'use client';
 
 import { ButtonHTMLAttributes, forwardRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, HTMLMotionProps } from 'framer-motion';
 import Link from 'next/link';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
@@ -32,22 +32,29 @@ const buttonVariants = cva(
 );
 
 export interface ButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement>,
+  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'disabled'>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   href?: string;
 }
 
+// Animation variants for the button
+const buttonAnimation = {
+  tap: { scale: 0.95 },
+  hover: { 
+    boxShadow: "0 5px 15px rgba(0, 0, 0, 0.1)",
+    y: -2,
+    transition: { duration: 0.2 }
+  }
+};
+
 const AnimatedButton = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, href, asChild = false, ...props }, ref) => {
-    // Animation variants for the button
-    const buttonAnimation = {
-      tap: { scale: 0.95 },
-      hover: { 
-        boxShadow: "0 5px 15px rgba(0, 0, 0, 0.1)",
-        y: -2,
-        transition: { duration: 0.2 }
-      }
+    // Common button props
+    const buttonProps = {
+      ref,
+      className: cn(buttonVariants({ variant, size, className })),
+      ...props
     };
 
     // If href is provided, render as Link
@@ -55,12 +62,10 @@ const AnimatedButton = forwardRef<HTMLButtonElement, ButtonProps>(
       return (
         <Link href={href} passHref>
           <motion.button
-            ref={ref}
             whileHover="hover"
             whileTap="tap"
             variants={buttonAnimation}
-            className={cn(buttonVariants({ variant, size, className }))}
-            {...props}
+            {...buttonProps}
           />
         </Link>
       );
@@ -69,12 +74,10 @@ const AnimatedButton = forwardRef<HTMLButtonElement, ButtonProps>(
     // Otherwise render as a regular button
     return (
       <motion.button
-        ref={ref}
         whileHover="hover"
         whileTap="tap"
         variants={buttonAnimation}
-        className={cn(buttonVariants({ variant, size, className }))}
-        {...props}
+        {...buttonProps}
       />
     );
   }
