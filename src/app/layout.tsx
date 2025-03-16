@@ -1,16 +1,17 @@
 import './globals.css';
+import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Navbar } from '@/components/Navbar';
-import AuthProvider from '@/components/AuthProvider';
-import { Metadata } from 'next';
-import Link from 'next/link';
-import { SchoolgleLogo } from '@/components/SchoolgleLogo';
+import { AuthProvider } from '@/components/AuthProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Schoolgle - AI Tools for Education',
-  description: 'Our platform provides intelligent tools designed specifically for educators to enhance teaching and support wellbeing.',
+  title: 'Schoolgle - AI-Powered Tools for Educators',
+  description: 'Schoolgle helps teachers save time, reduce stress, and focus on what matters most—their students and their wellbeing.',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
@@ -19,149 +20,103 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100`}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.className} min-h-screen bg-white dark:bg-gray-900 dark:text-white`}>
         <AuthProvider>
-          <div className="flex flex-col min-h-screen">
-            <Navbar />
-            <main className="flex-grow">{children}</main>
-            
-            <footer className="w-full border-t bg-background py-6 md:py-12">
-              <div className="container px-4 md:px-6 mx-auto">
-                <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-2">
-                      <Link href="/">
-                        <SchoolgleLogo size="text-2xl" />
-                      </Link>
-                    </div>
-                    <p className="text-sm text-muted-foreground">AI tools for educators, by educators.</p>
-                  </div>
-                  <div className="space-y-4">
-                    <h3 className="text-sm font-medium">Product</h3>
-                    <ul className="space-y-2">
-                      <li>
-                        <a
-                          href="#features"
-                          className="text-sm text-muted-foreground hover:text-foreground relative group"
-                        >
-                          Features
-                          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 dark:bg-blue-400 transition-all group-hover:w-full"></span>
-                        </a>
-                      </li>
-                      <li>
-                        <a
-                          href="#pricing"
-                          className="text-sm text-muted-foreground hover:text-foreground relative group"
-                        >
-                          Pricing
-                          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 dark:bg-blue-400 transition-all group-hover:w-full"></span>
-                        </a>
-                      </li>
-                      <li>
-                        <Link href="#" className="text-sm text-muted-foreground hover:text-foreground relative group">
-                          Integrations
-                          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 dark:bg-blue-400 transition-all group-hover:w-full"></span>
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="space-y-4">
-                    <h3 className="text-sm font-medium">Company</h3>
-                    <ul className="space-y-2">
-                      <li>
-                        <Link href="#" className="text-sm text-muted-foreground hover:text-foreground relative group">
-                          About
-                          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 dark:bg-blue-400 transition-all group-hover:w-full"></span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="#" className="text-sm text-muted-foreground hover:text-foreground relative group">
-                          Blog
-                          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 dark:bg-blue-400 transition-all group-hover:w-full"></span>
-                        </Link>
-                      </li>
-                      <li>
-                        <a
-                          href="#contact"
-                          className="text-sm text-muted-foreground hover:text-foreground relative group"
-                        >
-                          Contact
-                          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 dark:bg-blue-400 transition-all group-hover:w-full"></span>
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="space-y-4">
-                    <h3 className="text-sm font-medium">Resources</h3>
-                    <ul className="space-y-2">
-                      <li>
-                        <Link href="#" className="text-sm text-muted-foreground hover:text-foreground relative group">
-                          Help Center
-                          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 dark:bg-blue-400 transition-all group-hover:w-full"></span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="#" className="text-sm text-muted-foreground hover:text-foreground relative group">
-                          Privacy
-                          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 dark:bg-blue-400 transition-all group-hover:w-full"></span>
-                        </Link>
-                      </li>
-                      <li>
-                        <Link href="#" className="text-sm text-muted-foreground hover:text-foreground relative group">
-                          Terms
-                          <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 dark:bg-blue-400 transition-all group-hover:w-full"></span>
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-                <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t pt-8 md:flex-row">
-                  <p className="text-sm text-muted-foreground">
-                    &copy; {new Date().getFullYear()} Schoolgle. All rights reserved.
+          <Navbar />
+          <main className="pt-16 min-h-screen">
+            {children}
+          </main>
+          <footer className="px-4 py-8 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-800">
+            <div className="container mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                  <h3 className="font-bold text-lg mb-4">Schoolgle</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                    AI-powered tools designed for educators to enhance teaching and support wellbeing.
                   </p>
-                  <div className="flex items-center gap-4">
-                    <Link href="#" className="text-muted-foreground hover:text-foreground">
-                      <span className="sr-only">Twitter</span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="h-5 w-5"
-                      >
-                        <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
-                      </svg>
-                    </Link>
-                    <Link href="#" className="text-muted-foreground hover:text-foreground">
-                      <span className="sr-only">LinkedIn</span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="h-5 w-5"
-                      >
-                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                        <rect width="4" height="12" x="2" y="9"></rect>
-                        <circle cx="4" cy="4" r="2"></circle>
-                      </svg>
-                    </Link>
-                  </div>
+                </div>
+                <div>
+                  <h3 className="font-bold mb-4">Features</h3>
+                  <ul className="space-y-2 text-sm">
+                    <li>
+                      <a href="#teachers-hub" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        Teachers Hub
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#school-business-manager" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        School Business Manager
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#governance" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        Governance
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#report-buddy" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        Report Buddy
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-bold mb-4">Company</h3>
+                  <ul className="space-y-2 text-sm">
+                    <li>
+                      <a href="/about" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        About Us
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/careers" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        Careers
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/blog" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        Blog
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/press" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        Press
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h3 className="font-bold mb-4">Legal</h3>
+                  <ul className="space-y-2 text-sm">
+                    <li>
+                      <a href="/privacy" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        Privacy Policy
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/terms" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        Terms of Service
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/data" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        Data Processing
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/cookies" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                        Cookie Policy
+                      </a>
+                    </li>
+                  </ul>
                 </div>
               </div>
-            </footer>
-          </div>
+              <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-600 dark:text-gray-400">
+                © {new Date().getFullYear()} Schoolgle. All rights reserved.
+              </div>
+            </div>
+          </footer>
         </AuthProvider>
       </body>
     </html>
