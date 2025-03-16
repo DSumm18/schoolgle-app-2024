@@ -1,6 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Providers } from './providers';
+import Navbar from '@/components/Navbar';
 
 export const metadata: Metadata = {
   title: 'Schoolgle App',
@@ -16,24 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <header className="bg-blue-600 text-white p-4">
-            <div className="max-w-6xl mx-auto flex justify-between items-center">
-              <h1 className="text-2xl font-bold">Schoolgle</h1>
-              <nav>
-                <ul className="flex space-x-4">
-                  <li>
-                    <a href="/" className="hover:underline">Home</a>
-                  </li>
-                  <li>
-                    <a href="/login" className="hover:underline">Login</a>
-                  </li>
-                  <li>
-                    <a href="/register" className="hover:underline">Register</a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-          </header>
+          <Navbar />
           
           <main className="min-h-screen bg-gray-50 py-8">
             <div className="max-w-6xl mx-auto px-4">
