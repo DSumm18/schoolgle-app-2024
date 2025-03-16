@@ -84,14 +84,20 @@ export default function Home() {
                 {status === "authenticated" ? (
                   <Link href="/dashboard">
                     <AnimatedButton size="lg" className="gap-1">
-                      Go to Dashboard <ChevronRight className="h-4 w-4" />
+                      Go to Dashboard 
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="m9 18 6-6-6-6"/>
+                      </svg>
                     </AnimatedButton>
                   </Link>
                 ) : (
                   <>
                     <Link href="/register">
                       <AnimatedButton size="lg" className="gap-1">
-                        Try Schoolgle <ChevronRight className="h-4 w-4" />
+                        Try Schoolgle 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="m9 18 6-6-6-6"/>
+                        </svg>
                       </AnimatedButton>
                     </Link>
                     <Link href="/demo">
@@ -319,19 +325,27 @@ export default function Home() {
               
               <ul className="space-y-2 mb-6">
                 <li className="flex items-center">
-                  <Check className="mr-2 h-4 w-4 text-green-500 dark:text-green-400" />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2 h-4 w-4 text-green-500 dark:text-green-400">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
                   <span>Basic lesson planning</span>
                 </li>
                 <li className="flex items-center">
-                  <Check className="mr-2 h-4 w-4 text-green-500 dark:text-green-400" />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2 h-4 w-4 text-green-500 dark:text-green-400">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
                   <span>Assignment grading</span>
                 </li>
                 <li className="flex items-center">
-                  <Check className="mr-2 h-4 w-4 text-green-500 dark:text-green-400" />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2 h-4 w-4 text-green-500 dark:text-green-400">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
                   <span>Personal wellbeing tools</span>
                 </li>
                 <li className="flex items-center">
-                  <Check className="mr-2 h-4 w-4 text-green-500 dark:text-green-400" />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2 h-4 w-4 text-green-500 dark:text-green-400">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
                   <span>5GB storage</span>
                 </li>
               </ul>
@@ -363,23 +377,33 @@ export default function Home() {
               
               <ul className="space-y-2 mb-6">
                 <li className="flex items-center">
-                  <Check className="mr-2 h-4 w-4 text-green-500 dark:text-green-400" />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2 h-4 w-4 text-green-500 dark:text-green-400">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
                   <span>Everything in Teacher plan</span>
                 </li>
                 <li className="flex items-center">
-                  <Check className="mr-2 h-4 w-4 text-green-500 dark:text-green-400" />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2 h-4 w-4 text-green-500 dark:text-green-400">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
                   <span>Advanced curriculum alignment</span>
                 </li>
                 <li className="flex items-center">
-                  <Check className="mr-2 h-4 w-4 text-green-500 dark:text-green-400" />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2 h-4 w-4 text-green-500 dark:text-green-400">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
                   <span>School-wide analytics</span>
                 </li>
                 <li className="flex items-center">
-                  <Check className="mr-2 h-4 w-4 text-green-500 dark:text-green-400" />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2 h-4 w-4 text-green-500 dark:text-green-400">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
                   <span>Staff wellbeing dashboard</span>
                 </li>
                 <li className="flex items-center">
-                  <Check className="mr-2 h-4 w-4 text-green-500 dark:text-green-400" />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2 h-4 w-4 text-green-500 dark:text-green-400">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
                   <span>20GB storage per teacher</span>
                 </li>
               </ul>
@@ -405,23 +429,33 @@ export default function Home() {
               
               <ul className="space-y-2 mb-6">
                 <li className="flex items-center">
-                  <Check className="mr-2 h-4 w-4 text-green-500 dark:text-green-400" />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2 h-4 w-4 text-green-500 dark:text-green-400">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
                   <span>Everything in School plan</span>
                 </li>
                 <li className="flex items-center">
-                  <Check className="mr-2 h-4 w-4 text-green-500 dark:text-green-400" />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2 h-4 w-4 text-green-500 dark:text-green-400">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
                   <span>District-wide data insights</span>
                 </li>
                 <li className="flex items-center">
-                  <Check className="mr-2 h-4 w-4 text-green-500 dark:text-green-400" />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2 h-4 w-4 text-green-500 dark:text-green-400">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
                   <span>Custom integration with existing systems</span>
                 </li>
                 <li className="flex items-center">
-                  <Check className="mr-2 h-4 w-4 text-green-500 dark:text-green-400" />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2 h-4 w-4 text-green-500 dark:text-green-400">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
                   <span>Priority support</span>
                 </li>
                 <li className="flex items-center">
-                  <Check className="mr-2 h-4 w-4 text-green-500 dark:text-green-400" />
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2 h-4 w-4 text-green-500 dark:text-green-400">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
                   <span>Unlimited storage</span>
                 </li>
               </ul>
@@ -454,7 +488,10 @@ export default function Home() {
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
               <Link href="/register">
                 <AnimatedButton size="lg" className="gap-1">
-                  Start Your Free Trial <ChevronRight className="h-4 w-4" />
+                  Start Your Free Trial 
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="m9 18 6-6-6-6"/>
+                  </svg>
                 </AnimatedButton>
               </Link>
               <Link href="/demo">
