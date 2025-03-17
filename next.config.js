@@ -10,14 +10,17 @@ const nextConfig = {
     // Ignoring ESLint errors to allow the build to complete
     ignoreDuringBuilds: true,
   },
-  // Allows for static rendering of pages that would normally require dynamic rendering
-  output: 'export',
-  // Disable image optimization since it's not compatible with 'export'
-  images: { unoptimized: true },
+  // No longer using static export as it's incompatible with API routes
+  // output: 'export',
+  // Allow images from any domain
+  images: { 
+    domains: ['*'],
+    unoptimized: true 
+  },
   // Disabling incremental builds to force full rebuild
   experimental: {
-    // Prevent caching issues between builds
-    incrementalCacheHandlerPath: false,
+    // Turn off caching between builds
+    // incrementalCacheHandlerPath: false, // This was causing a type error
   },
 }
 
