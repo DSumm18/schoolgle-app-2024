@@ -1,4 +1,4 @@
-import NextAuth from "next-auth/next";
+import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { createServerClient } from "@/utils/supabase/server";
 
@@ -24,23 +24,27 @@ const handler = NextAuth({
           });
 
           if (error || !data.user) {
+            console.error("Authentication error:", error);
             return null;
           }
 
           return {
             id: data.user.id,
             email: data.user.email,
-            name: data.user.user_metadata?.name || data.user.email?.split('@')[0],
+            name: data.user.user_metadata?.full_name || data.user.email,
           };
         } catch (error) {
-          console.error("Authentication error:", error);
+          console.error("Supabase auth error:", error);
           return null;
         }
       }
-    })
+    }),
   ],
   pages: {
     signIn: '/login',
+    signOut: '/',
+    error: '/login',
+    newUser: '/register',
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -54,11 +58,12 @@ const handler = NextAuth({
         session.user.id = token.id as string;
       }
       return session;
-    }
+    },
   },
   session: {
     strategy: "jwt",
   },
+  secret: process.env.NEXTAUTH_SECRET,
 });
 
 export { handler as GET, handler as POST };
