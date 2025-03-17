@@ -1,92 +1,35 @@
 'use client';
 
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
-export interface AnimatedLogoProps {
-  className?: string;
-  size?: 'sm' | 'md' | 'lg';
-}
-
-export function AnimatedLogo({ 
-  className = '',
-  size = 'md',
-}: AnimatedLogoProps) {
-  const [isHovered, setIsHovered] = useState(false);
-  
-  // Size classes
-  const sizeClasses = {
-    sm: 'text-xl',
-    md: 'text-2xl md:text-3xl',
-    lg: 'text-3xl md:text-4xl lg:text-5xl',
-  };
-  
-  // Colors for each letter
-  const letterColors = [
-    'text-blue-500',    // S
-    'text-red-500',     // c
-    'text-yellow-500',  // h
-    'text-blue-500',    // o
-    'text-green-500',   // o
-    'text-red-500',     // l
-    'text-yellow-500',  // g
-    'text-blue-500',    // l
-    'text-green-500',   // e
-  ];
-  
-  // Animation for each letter
-  const letterAnimation = {
-    hover: (i: number) => ({
-      y: [0, -10, 0],
-      transition: {
-        y: {
-          duration: 0.5,
-          repeat: 0,
-          ease: "easeOut",
-          delay: i * 0.05,
-        }
-      }
-    }),
-    nonHover: {
-      y: 0,
-      transition: {
-        y: {
-          duration: 0.5,
-          ease: "easeOut"
-        }
-      }
-    }
-  };
-  
-  // Split the word into individual letters
-  const letters = "Schoolgle".split("");
-  
+const AnimatedLogo = () => {
   return (
-    <Link href="/">
+    <Link href="/" className="flex items-center space-x-2">
       <motion.div
-        className={`font-bold ${sizeClasses[size]} ${className}`}
-        onHoverStart={() => setIsHovered(true)}
-        onHoverEnd={() => setIsHovered(false)}
-        whileHover={{ scale: 1.05 }}
-        transition={{ duration: 0.2 }}
+        className="relative w-8 h-8 bg-blue-600 dark:bg-blue-500 rounded-lg"
+        whileHover={{ rotate: 10, scale: 1.1 }}
+        transition={{ type: 'spring', stiffness: 300 }}
       >
-        <motion.span 
-          className="inline-flex"
-          animate={isHovered ? 'hover' : 'nonHover'}
+        <motion.div
+          className="absolute inset-0 flex items-center justify-center text-white font-bold text-lg"
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
         >
-          {letters.map((letter, i) => (
-            <motion.span
-              key={i}
-              className={letterColors[i]}
-              variants={letterAnimation}
-              custom={i}
-            >
-              {letter}
-            </motion.span>
-          ))}
-        </motion.span>
+          S
+        </motion.div>
       </motion.div>
+      <motion.span
+        className="text-gray-800 dark:text-white text-xl font-bold"
+        initial={{ opacity: 0, x: -5 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.3 }}
+      >
+        Schoolgle
+      </motion.span>
     </Link>
   );
-}
+};
+
+export default AnimatedLogo;
