@@ -8,6 +8,7 @@ Schoolgle helps teachers save time, reduce stress, and focus on what matters mos
 - 🏫 **School Management**: Tools for administrators and business managers
 - 📊 **Data Insights**: Analytics to track student progress and teacher wellbeing
 - 🌙 **Dark Mode**: Easy on the eyes during late-night planning sessions
+- ✨ **Animated UI**: Beautiful, responsive interface with smooth animations
 
 ## 🚀 Getting Started
 
