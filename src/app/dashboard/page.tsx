@@ -7,6 +7,7 @@ import DashboardHeader from '@/components/dashboard/DashboardHeader';
 import WeatherWidget from '@/components/widgets/WeatherWidget';
 import NewsCarousel from '@/components/widgets/NewsCarousel';
 import EventsCalendar from '@/components/widgets/EventsCalendar';
+import SocialMediaFeed from '@/components/widgets/SocialMediaFeed';
 import ModuleGrid from '@/components/dashboard/ModuleGrid';
 import ChatbotWidget from '@/components/chatbot/ChatbotWidget';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
@@ -231,20 +232,39 @@ export default function DashboardPage() {
           </div>
         </motion.div>
         
-        {/* News and Events section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <motion.div variants={itemVariants}>
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
-              Latest News
-            </h3>
-            <NewsCarousel items={school?.news || []} />
+        {/* News, Events, and Social Media section */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+          <motion.div variants={itemVariants} className="lg:col-span-2">
+            <div className="grid grid-cols-1 gap-6">
+              {/* News section */}
+              <div>
+                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
+                  Latest News
+                </h3>
+                <NewsCarousel items={school?.news || []} />
+              </div>
+              
+              {/* Events section */}
+              <div>
+                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
+                  Upcoming Events
+                </h3>
+                <EventsCalendar events={school?.events || []} />
+              </div>
+            </div>
           </motion.div>
           
+          {/* Social Media Feed */}
           <motion.div variants={itemVariants}>
             <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
-              Upcoming Events
+              Social Media
             </h3>
-            <EventsCalendar events={school?.events || []} />
+            <SocialMediaFeed 
+              platform="all" 
+              username={school?.socialMedia?.twitter}
+              maxPosts={3}
+              showImages={true}
+            />
           </motion.div>
         </div>
         
