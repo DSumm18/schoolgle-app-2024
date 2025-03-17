@@ -62,6 +62,7 @@ export function SchoolProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// Export both names for compatibility with different components
 export function useSchool() {
   const context = useContext(SchoolContext);
   
@@ -71,3 +72,5 @@ export function useSchool() {
   
   return context;
 }
+
+export const useSchoolContext = useSchool;
