@@ -1,7 +1,7 @@
 'use client';
 
-import { forwardRef, ReactNode } from 'react';
-import { motion } from 'framer-motion';
+import { forwardRef } from 'react';
+import { motion, HTMLMotionProps } from 'framer-motion';
 import Link from 'next/link';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
@@ -31,7 +31,7 @@ const buttonVariants = cva(
   }
 );
 
-// Animation variants for the button
+// Animation variants
 const buttonAnimation = {
   tap: { scale: 0.95 },
   hover: { 
@@ -41,64 +41,48 @@ const buttonAnimation = {
   }
 };
 
-// Define a minimal props interface with only the props we need
-// This avoids type conflicts between React and Framer Motion
-export interface ButtonProps extends VariantProps<typeof buttonVariants> {
-  className?: string;
+// Define our props interface - crucially omitting onDrag to avoid type conflicts
+// between React's DragEvent and Framer Motion's drag handler
+export type AnimatedButtonProps = Omit<
+  HTMLMotionProps<"button">, 
+  "onDrag" | "ref"
+> & {
   href?: string;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  children: ReactNode;
-  type?: 'button' | 'submit' | 'reset';
-  disabled?: boolean;
-  ariaLabel?: string;
-  id?: string;
-}
+  variant?: 'default' | 'outline' | 'secondary' | 'ghost' | 'destructive';
+  size?: 'default' | 'sm' | 'lg';
+};
 
-// Create a component that doesn't try to mix incompatible event handlers
-const AnimatedButton = forwardRef<HTMLButtonElement, ButtonProps>(
+// The component with clear, explicit typing
+const AnimatedButton = forwardRef<HTMLButtonElement, AnimatedButtonProps>(
   ({ 
     className, 
     variant, 
     size, 
-    href, 
-    onClick,
+    href,
     children,
-    type = 'button',
-    disabled = false,
-    ariaLabel,
-    id,
+    ...props 
   }, ref) => {
-    // Common props safe to pass to motion.button
-    const safeMotionProps = {
-      ref,
-      whileHover: "hover",
-      whileTap: "tap",
-      variants: buttonAnimation,
-      className: cn(buttonVariants({ variant, size, className })),
-      type,
-      disabled,
-      "aria-label": ariaLabel,
-      id,
-      onClick,
-    };
-
-    // If href is provided, render as Link
-    if (href) {
-      return (
-        <Link href={href} passHref>
-          <motion.button {...safeMotionProps}>
-            {children}
-          </motion.button>
-        </Link>
-      );
-    }
-
-    // Otherwise render as a regular button
-    return (
-      <motion.button {...safeMotionProps}>
+    // Create the motion button element with proper props
+    const motionButton = (
+      <motion.button
+        ref={ref}
+        className={cn(buttonVariants({ variant, size, className }))}
+        whileHover="hover"
+        whileTap="tap"
+        variants={buttonAnimation}
+        {...props}
+      >
         {children}
       </motion.button>
     );
+
+    // Wrap in Link if href is provided
+    if (href) {
+      return <Link href={href} passHref>{motionButton}</Link>;
+    }
+
+    // Otherwise return the button directly
+    return motionButton;
   }
 );
 
