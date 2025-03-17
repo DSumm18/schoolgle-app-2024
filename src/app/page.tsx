@@ -2,10 +2,14 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { ModuleInitializer } from '@/lib/modules/module-init-client';
 
 export default function HomePage() {
   return (
     <div className="flex flex-col items-center justify-center py-20 px-4 sm:px-6 lg:px-8 min-h-[80vh]">
+      {/* Initialize modules on client-side */}
+      <ModuleInitializer />
+      
       <motion.div 
         className="max-w-3xl w-full text-center"
         initial={{ opacity: 0, y: 20 }}
