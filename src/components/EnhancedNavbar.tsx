@@ -45,6 +45,7 @@ export default function EnhancedNavbar() {
     { name: 'Features', href: '/features' },
     { name: 'Testimonials', href: '/testimonials' },
     { name: 'Pricing', href: '/pricing' },
+    { name: 'Social Media', href: '/social-media' },
     { name: 'Contact', href: '/contact' },
   ];
 
