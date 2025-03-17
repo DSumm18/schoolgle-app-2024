@@ -68,11 +68,13 @@ A comprehensive intranet platform for schools and educational institutions, desi
 - `/src/utils`: Helper functions and services
 - `/public`: Static assets and images
 
-## Recent Updates
+## Recent Updates (March 17, 2025)
 
-- Fixed component export/import issues
-- Added static export configuration for deployment
-- Implemented error handling in Next.js config
+- Fixed hook naming in SchoolContext to support useSchoolContext
+- Removed static export config to support API routes
+- Fixed Next.js configuration for proper deployment
+- Added alias to support both useSchool and useSchoolContext
+- Fixed all component export/import issues
 - Created simplified landing page and social media page
 - Added ThemeProvider, AuthProvider, and SchoolContext
 - Fixed AnimatedLogo component
