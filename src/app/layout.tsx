@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import { Metadata } from 'next';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { SchoolProvider } from '@/contexts/SchoolContext';
+import { ModuleProvider } from '@/contexts/ModuleContext';
 import AuthProvider from '@/components/AuthProvider';
 import EnhancedNavbar from '@/components/EnhancedNavbar';
 
@@ -29,18 +30,20 @@ export default function RootLayout({
         >
           <AuthProvider>
             <SchoolProvider>
-              <div className="flex flex-col min-h-screen">
-                <EnhancedNavbar />
-                <main className="flex-grow">{children}</main>
-                <footer className="py-6 px-4 lg:px-8 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
-                  <div className="max-w-7xl mx-auto text-center text-sm text-gray-500 dark:text-gray-400">
-                    <p>© {new Date().getFullYear()} Schoolgle. All rights reserved.</p>
-                    <p className="mt-1">
-                      A comprehensive intranet platform for schools and educational institutions.
-                    </p>
-                  </div>
-                </footer>
-              </div>
+              <ModuleProvider>
+                <div className="flex flex-col min-h-screen">
+                  <EnhancedNavbar />
+                  <main className="flex-grow">{children}</main>
+                  <footer className="py-6 px-4 lg:px-8 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+                    <div className="max-w-7xl mx-auto text-center text-sm text-gray-500 dark:text-gray-400">
+                      <p>© {new Date().getFullYear()} Schoolgle. All rights reserved.</p>
+                      <p className="mt-1">
+                        A comprehensive intranet platform for schools and educational institutions.
+                      </p>
+                    </div>
+                  </footer>
+                </div>
+              </ModuleProvider>
             </SchoolProvider>
           </AuthProvider>
         </ThemeProvider>
