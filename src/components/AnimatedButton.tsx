@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef } from 'react';
+import { forwardRef, ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { cva, type VariantProps } from 'class-variance-authority';
@@ -41,19 +41,20 @@ const buttonAnimation = {
   }
 };
 
-// Define a simpler props interface to avoid TypeScript form-related errors
+// Define a minimal props interface with only the props we need
+// This avoids type conflicts between React and Framer Motion
 export interface ButtonProps extends VariantProps<typeof buttonVariants> {
   className?: string;
   href?: string;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  children?: React.ReactNode;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  children: ReactNode;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   ariaLabel?: string;
-  name?: string;
   id?: string;
 }
 
+// Create a component that doesn't try to mix incompatible event handlers
 const AnimatedButton = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ 
     className, 
@@ -65,27 +66,27 @@ const AnimatedButton = forwardRef<HTMLButtonElement, ButtonProps>(
     type = 'button',
     disabled = false,
     ariaLabel,
-    name,
     id,
-    ...props 
   }, ref) => {
+    // Common props safe to pass to motion.button
+    const safeMotionProps = {
+      ref,
+      whileHover: "hover",
+      whileTap: "tap",
+      variants: buttonAnimation,
+      className: cn(buttonVariants({ variant, size, className })),
+      type,
+      disabled,
+      "aria-label": ariaLabel,
+      id,
+      onClick,
+    };
+
     // If href is provided, render as Link
     if (href) {
       return (
         <Link href={href} passHref>
-          <motion.button
-            ref={ref}
-            whileHover="hover"
-            whileTap="tap"
-            variants={buttonAnimation}
-            className={cn(buttonVariants({ variant, size, className }))}
-            type={type}
-            disabled={disabled}
-            aria-label={ariaLabel}
-            name={name}
-            id={id}
-            onClick={onClick}
-          >
+          <motion.button {...safeMotionProps}>
             {children}
           </motion.button>
         </Link>
@@ -94,19 +95,7 @@ const AnimatedButton = forwardRef<HTMLButtonElement, ButtonProps>(
 
     // Otherwise render as a regular button
     return (
-      <motion.button
-        ref={ref}
-        whileHover="hover"
-        whileTap="tap"
-        variants={buttonAnimation}
-        className={cn(buttonVariants({ variant, size, className }))}
-        type={type}
-        disabled={disabled}
-        aria-label={ariaLabel}
-        name={name}
-        id={id}
-        onClick={onClick}
-      >
+      <motion.button {...safeMotionProps}>
         {children}
       </motion.button>
     );
