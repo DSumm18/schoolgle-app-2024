@@ -1,62 +1,101 @@
-import { ClassValue, clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 /**
- * Combines class names with Tailwind's class merging
- * This allows for conditional class application and proper merging of Tailwind classes
+ * Combines class names with Tailwind CSS support
+ * This uses clsx for conditional classes and tailwind-merge to handle
+ * conflicts between Tailwind CSS classes
  */
-export function cn(...inputs: ClassValue[]) {
+export function cn(...inputs: ClassValue[]): string {
   return twMerge(clsx(inputs));
 }
 
 /**
- * Formats a date object into a localized string
+ * Format a date to a readable string
+ * @param date The date to format
+ * @param options Intl.DateTimeFormatOptions for formatting
+ * @returns Formatted date string
  */
-export function formatDate(date: Date): string {
-  return new Intl.DateTimeFormat('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  }).format(date);
+export function formatDate(
+  date: Date | string,
+  options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }
+): string {
+  const dateObj = typeof date === "string" ? new Date(date) : date;
+  return new Intl.DateTimeFormat("en-US", options).format(dateObj);
 }
 
 /**
- * Delays execution for the specified milliseconds
+ * Truncate a string to a certain length with ellipsis
+ * @param str The string to truncate
+ * @param length Maximum length before truncation
+ * @returns Truncated string
+ */
+export function truncate(str: string, length: number): string {
+  return str.length > length ? str.substring(0, length) + "..." : str;
+}
+
+/**
+ * Convert a string to title case
+ * @param str The string to convert
+ * @returns Title case string
+ */
+export function titleCase(str: string): string {
+  return str
+    .toLowerCase()
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+/**
+ * Check if an object is empty
+ * @param obj The object to check
+ * @returns True if the object is empty
+ */
+export function isEmptyObject(obj: Record<string, any>): boolean {
+  return Object.keys(obj).length === 0;
+}
+
+/**
+ * Delay execution for a certain amount of time
+ * @param ms Milliseconds to delay
+ * @returns Promise that resolves after the delay
  */
 export function delay(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 /**
- * Truncates a string to the specified length and adds ellipsis if truncated
+ * Generate a random string of a certain length
+ * @param length Length of the string
+ * @returns Random string
  */
-export function truncateString(str: string, length: number): string {
-  if (str.length <= length) return str;
-  return str.slice(0, length) + '...';
+export function randomString(length: number): string {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let result = "";
+  for (let i = 0; i < length; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
 }
 
 /**
- * Checks if the current client is on a mobile device
- */
-export function isMobile(): boolean {
-  if (typeof window === 'undefined') return false;
-  return window.innerWidth < 768;
-}
-
-/**
- * Creates a debounced function that delays invoking the provided function
- * until after the specified wait time has elapsed since the last time it was invoked
+ * Debounce a function
+ * @param func The function to debounce
+ * @param wait Milliseconds to wait
+ * @returns Debounced function
  */
 export function debounce<T extends (...args: any[]) => any>(
-  fn: T,
-  delay: number
+  func: T,
+  wait: number
 ): (...args: Parameters<T>) => void {
-  let timeout: ReturnType<typeof setTimeout> | null = null;
-  
-  return function(...args: Parameters<T>) {
-    if (timeout) clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      fn(...args);
-    }, delay);
+  let timeout: NodeJS.Timeout;
+  return function (...args: Parameters<T>): void {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), wait);
   };
 }
