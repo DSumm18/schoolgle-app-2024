@@ -1,37 +1,23 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-  images: {
-    domains: ['raw.githubusercontent.com'],
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
-  },
-  // Skip type checking completely
   typescript: {
+    // !! WARN !!
+    // Ignoring TypeScript errors to allow the build to complete
+    // Remove this in production when all type errors are fixed
     ignoreBuildErrors: true,
   },
-  // Skip ESLint checks
   eslint: {
+    // Ignoring ESLint errors to allow the build to complete
     ignoreDuringBuilds: true,
   },
-  // Skip linting
-  onDemandEntries: {
-    maxInactiveAge: 25 * 1000,
-    pagesBufferLength: 4,
-  },
-  // Force cache to be disabled
-  generateBuildId: async () => {
-    return `build-${Date.now()}`;
-  },
-  // Disable webpack telemetry
-  webpack: (config, { dev, isServer }) => {
-    // Further optimization can be done here
-    return config;
+  // Allows for static rendering of pages that would normally require dynamic rendering
+  output: 'export',
+  // Disable image optimization since it's not compatible with 'export'
+  images: { unoptimized: true },
+  // Disabling incremental builds to force full rebuild
+  experimental: {
+    // Prevent caching issues between builds
+    incrementalCacheHandlerPath: false,
   },
 }
 
