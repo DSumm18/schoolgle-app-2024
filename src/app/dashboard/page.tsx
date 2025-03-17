@@ -14,6 +14,7 @@ import LanguageSwitcher from '@/components/LanguageSwitcher';
 import AuthStatus from '@/components/AuthStatus';
 import { Bell, Calendar, InfoIcon, Shield } from 'lucide-react';
 import { useSchoolContext } from '@/contexts/SchoolContext';
+import { useModules } from '@/contexts/ModuleContext';
 
 // Animation variants for staggered entrance
 const containerVariants = {
@@ -38,9 +39,13 @@ const itemVariants = {
 
 export default function DashboardPage() {
   const { data: session, status } = useSession();
-  const { school, isLoading } = useSchoolContext();
+  const { school, isLoading: schoolLoading } = useSchoolContext();
+  const { loading: modulesLoading } = useModules();
   const [greeting, setGreeting] = useState('');
   const [showAuth, setShowAuth] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('');
+  
+  const isLoading = schoolLoading || modulesLoading;
   
   // Set greeting based on time of day
   useEffect(() => {
@@ -294,12 +299,73 @@ export default function DashboardPage() {
           </motion.div>
         </div>
         
-        {/* Modules section */}
+        {/* Module category filters */}
+        <motion.div variants={itemVariants} className="mb-6">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white">
+              Modules
+            </h3>
+            <div className="flex gap-2 overflow-x-auto py-2">
+              <button
+                onClick={() => setActiveCategory('')}
+                className={`px-3 py-1 text-sm rounded-full whitespace-nowrap transition-colors ${
+                  activeCategory === '' 
+                    ? 'bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200' 
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                }`}
+              >
+                All Modules
+              </button>
+              <button
+                onClick={() => setActiveCategory('estates')}
+                className={`px-3 py-1 text-sm rounded-full whitespace-nowrap transition-colors ${
+                  activeCategory === 'estates' 
+                    ? 'bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200' 
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                }`}
+              >
+                Estates
+              </button>
+              <button
+                onClick={() => setActiveCategory('teaching')}
+                className={`px-3 py-1 text-sm rounded-full whitespace-nowrap transition-colors ${
+                  activeCategory === 'teaching' 
+                    ? 'bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200' 
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                }`}
+              >
+                Teaching & Learning
+              </button>
+              <button
+                onClick={() => setActiveCategory('admin')}
+                className={`px-3 py-1 text-sm rounded-full whitespace-nowrap transition-colors ${
+                  activeCategory === 'admin' 
+                    ? 'bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200' 
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                }`}
+              >
+                Administration
+              </button>
+              <button
+                onClick={() => setActiveCategory('system')}
+                className={`px-3 py-1 text-sm rounded-full whitespace-nowrap transition-colors ${
+                  activeCategory === 'system' 
+                    ? 'bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200' 
+                    : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+                }`}
+              >
+                System
+              </button>
+            </div>
+          </div>
+        </motion.div>
+        
+        {/* Modules grid */}
         <motion.div variants={itemVariants}>
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
-            Modules
-          </h3>
-          <ModuleGrid modules={school?.enabledModules || []} />
+          <ModuleGrid 
+            modules={school?.enabledModules || []} 
+            filter={activeCategory}
+          />
         </motion.div>
       </motion.main>
       
