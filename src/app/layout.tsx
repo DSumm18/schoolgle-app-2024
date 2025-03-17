@@ -1,17 +1,16 @@
 import './globals.css';
-import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { Navbar } from '@/components/Navbar';
-import { Providers } from './providers';
+import { Metadata } from 'next';
+import { ThemeProvider } from '@/components/ThemeProvider';
+import { SchoolProvider } from '@/contexts/SchoolContext';
+import AuthProvider from '@/components/AuthProvider';
+import { EnhancedNavbar } from '@/components/EnhancedNavbar';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Schoolgle - AI-Powered Tools for Educators',
-  description: 'Schoolgle helps teachers save time, reduce stress, and focus on what matters most—their students and their wellbeing.',
-  icons: {
-    icon: '/favicon.ico',
-  },
+  title: 'Schoolgle - School Intranet Platform',
+  description: 'A comprehensive intranet platform for schools and educational institutions',
 };
 
 export default function RootLayout({
@@ -21,103 +20,30 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} min-h-screen bg-white dark:bg-gray-900 dark:text-white`}>
-        <Providers>
-          <Navbar />
-          <main className="pt-16 min-h-screen">
-            {children}
-          </main>
-          <footer className="px-4 py-8 bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-800">
-            <div className="container mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div>
-                  <h3 className="font-bold text-lg mb-4">Schoolgle</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-                    AI-powered tools designed for educators to enhance teaching and support wellbeing.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="font-bold mb-4">Features</h3>
-                  <ul className="space-y-2 text-sm">
-                    <li>
-                      <a href="#teachers-hub" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                        Teachers Hub
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#school-business-manager" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                        School Business Manager
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#governance" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                        Governance
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#report-buddy" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                        Report Buddy
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="font-bold mb-4">Company</h3>
-                  <ul className="space-y-2 text-sm">
-                    <li>
-                      <a href="/about" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                        About Us
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/careers" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                        Careers
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/blog" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                        Blog
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/press" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                        Press
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <div>
-                  <h3 className="font-bold mb-4">Legal</h3>
-                  <ul className="space-y-2 text-sm">
-                    <li>
-                      <a href="/privacy" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                        Privacy Policy
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/terms" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                        Terms of Service
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/data" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                        Data Processing
-                      </a>
-                    </li>
-                    <li>
-                      <a href="/cookies" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
-                        Cookie Policy
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+      <body className={inter.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <AuthProvider>
+            <SchoolProvider>
+              <div className="flex flex-col min-h-screen">
+                <EnhancedNavbar />
+                <main className="flex-grow">{children}</main>
+                <footer className="py-6 px-4 lg:px-8 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+                  <div className="max-w-7xl mx-auto text-center text-sm text-gray-500 dark:text-gray-400">
+                    <p>© {new Date().getFullYear()} Schoolgle. All rights reserved.</p>
+                    <p className="mt-1">
+                      A comprehensive intranet platform for schools and educational institutions.
+                    </p>
+                  </div>
+                </footer>
               </div>
-              <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-600 dark:text-gray-400">
-                © {new Date().getFullYear()} Schoolgle. All rights reserved.
-              </div>
-            </div>
-          </footer>
-        </Providers>
+            </SchoolProvider>
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
