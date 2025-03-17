@@ -11,7 +11,8 @@ import SocialMediaFeed from '@/components/widgets/SocialMediaFeed';
 import ModuleGrid from '@/components/dashboard/ModuleGrid';
 import ChatbotWidget from '@/components/chatbot/ChatbotWidget';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
-import { Bell, Calendar, InfoIcon } from 'lucide-react';
+import AuthStatus from '@/components/AuthStatus';
+import { Bell, Calendar, InfoIcon, Shield } from 'lucide-react';
 import { useSchoolContext } from '@/contexts/SchoolContext';
 
 // Animation variants for staggered entrance
@@ -39,6 +40,7 @@ export default function DashboardPage() {
   const { data: session, status } = useSession();
   const { school, isLoading } = useSchoolContext();
   const [greeting, setGreeting] = useState('');
+  const [showAuth, setShowAuth] = useState(false);
   
   // Set greeting based on time of day
   useEffect(() => {
@@ -92,8 +94,32 @@ export default function DashboardPage() {
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
             {greeting || 'Welcome to your dashboard'}
           </h2>
-          <LanguageSwitcher />
+          <div className="flex items-center gap-4">
+            <motion.button
+              onClick={() => setShowAuth(!showAuth)}
+              className="flex items-center gap-1 text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Shield size={16} />
+              <span>Auth Status</span>
+            </motion.button>
+            <LanguageSwitcher />
+          </div>
         </motion.div>
+        
+        {/* Auth Status popup */}
+        {showAuth && (
+          <motion.div
+            variants={itemVariants}
+            className="mb-6"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+          >
+            <AuthStatus />
+          </motion.div>
+        )}
         
         {/* Announcement banner if there is one */}
         {school?.currentAnnouncement && (
