@@ -1,164 +1,264 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import DashboardHeader from '@/components/dashboard/DashboardHeader';
+import WeatherWidget from '@/components/widgets/WeatherWidget';
+import NewsCarousel from '@/components/widgets/NewsCarousel';
+import EventsCalendar from '@/components/widgets/EventsCalendar';
+import ModuleGrid from '@/components/dashboard/ModuleGrid';
+import ChatbotWidget from '@/components/chatbot/ChatbotWidget';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
+import { Bell, Calendar, InfoIcon } from 'lucide-react';
+import { useSchoolContext } from '@/contexts/SchoolContext';
 
-// Dashboard Widgets
-const StatCard = ({ title, value, icon }: { title: string; value: string | number; icon: string }) => (
-  <div className="bg-white rounded-lg shadow p-5 flex items-center">
-    <div className="rounded-full bg-blue-100 p-3 mr-4">
-      <span className="text-2xl text-blue-600">{icon}</span>
-    </div>
-    <div>
-      <h3 className="text-gray-500 text-sm">{title}</h3>
-      <p className="text-2xl font-semibold">{value}</p>
-    </div>
-  </div>
-);
+// Animation variants for staggered entrance
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      when: 'beforeChildren',
+      staggerChildren: 0.1,
+    },
+  },
+};
 
-const RecentActivity = () => (
-  <div className="bg-white rounded-lg shadow p-5">
-    <h3 className="font-semibold text-lg mb-4">Recent Activity</h3>
-    <div className="space-y-4">
-      {[
-        { action: 'Report submitted', user: 'Sarah Johnson', time: '2 hours ago' },
-        { action: 'Maintenance request created', user: 'John Smith', time: '3 hours ago' },
-        { action: 'Resource updated', user: 'Emma Williams', time: '5 hours ago' }
-      ].map((activity, i) => (
-        <div key={i} className="flex items-start pb-3 border-b border-gray-100">
-          <div className="w-1 h-1 bg-blue-500 rounded-full mt-3 mr-2"></div>
-          <div>
-            <p className="font-medium">{activity.action}</p>
-            <p className="text-sm text-gray-500">By {activity.user} · {activity.time}</p>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-);
-
-const TasksList = () => (
-  <div className="bg-white rounded-lg shadow p-5">
-    <h3 className="font-semibold text-lg mb-4">Tasks</h3>
-    <div className="space-y-3">
-      {[
-        { title: 'Review monthly reports', priority: 'High', dueDate: 'Today' },
-        { title: 'Prepare for board meeting', priority: 'Medium', dueDate: 'Tomorrow' },
-        { title: 'Update resource inventory', priority: 'Low', dueDate: 'Next week' }
-      ].map((task, i) => (
-        <div key={i} className="flex justify-between items-center py-2 px-3 border-b border-gray-100">
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              className="h-4 w-4 text-blue-600 border-gray-300 rounded mr-3"
-            />
-            <span>{task.title}</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <span className={`px-2 py-1 text-xs rounded ${
-              task.priority === 'High' ? 'bg-red-100 text-red-700' :
-              task.priority === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
-              'bg-green-100 text-green-700'
-            }`}>
-              {task.priority}
-            </span>
-            <span className="text-sm text-gray-500">{task.dueDate}</span>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-);
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4 }
+  },
+};
 
 export default function DashboardPage() {
   const { data: session, status } = useSession();
-  const router = useRouter();
-  const [loading, setLoading] = useState(true);
-
-  // Redirect to login if not authenticated
+  const { school, isLoading } = useSchoolContext();
+  const [greeting, setGreeting] = useState('');
+  
+  // Set greeting based on time of day
   useEffect(() => {
-    if (status === 'loading') return;
+    const hour = new Date().getHours();
+    let greetingMessage = '';
     
-    if (status === 'unauthenticated') {
-      router.push('/login');
+    if (hour >= 5 && hour < 12) {
+      greetingMessage = 'Good morning';
+    } else if (hour >= 12 && hour < 18) {
+      greetingMessage = 'Good afternoon';
     } else {
-      setLoading(false);
+      greetingMessage = 'Good evening';
     }
-  }, [status, router]);
-
-  if (loading || status === 'loading') {
+    
+    if (session?.user?.name) {
+      greetingMessage += `, ${session.user.name.split(' ')[0]}`;
+    }
+    
+    setGreeting(greetingMessage);
+  }, [session]);
+  
+  if (status === 'loading' || isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-[50vh]">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-600"></div>
+      <div className="flex flex-col min-h-screen">
+        <DashboardHeader />
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-indigo-500 border-r-transparent"></div>
+            <p className="mt-4 text-gray-600 dark:text-gray-400">Loading your dashboard...</p>
+          </div>
+        </div>
       </div>
     );
   }
-
+  
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Dashboard</h1>
-        <div className="text-sm text-gray-600">
-          Welcome back, {session?.user?.name || 'User'}
-        </div>
-      </div>
-
-      {/* Stats Row */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <StatCard title="Students" value={1245} icon="👨‍🎓" />
-        <StatCard title="Staff Members" value={83} icon="👩‍🏫" />
-        <StatCard title="Facilities" value={24} icon="🏢" />
-      </div>
-
-      {/* Main Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        {/* Left Column */}
-        <div className="lg:col-span-2 space-y-4">
-          <RecentActivity />
-          
-          {/* Quick Links */}
-          <div className="bg-white rounded-lg shadow p-5">
-            <h3 className="font-semibold text-lg mb-4">Quick Actions</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[
-                { name: 'Add Student', icon: '➕' },
-                { name: 'Generate Report', icon: '📊' },
-                { name: 'Manage Staff', icon: '👥' },
-                { name: 'Facility Booking', icon: '🗓️' }
-              ].map((action, i) => (
-                <button key={i} className="flex flex-col items-center justify-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100">
-                  <span className="text-2xl mb-2">{action.icon}</span>
-                  <span className="text-sm">{action.name}</span>
-                </button>
-              ))}
+    <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900">
+      <DashboardHeader />
+      
+      <motion.main
+        className="flex-1 px-4 lg:px-8 py-6"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        {/* Top row - Greeting and language switcher */}
+        <motion.div 
+          className="mb-6 flex justify-between items-center"
+          variants={itemVariants}
+        >
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+            {greeting || 'Welcome to your dashboard'}
+          </h2>
+          <LanguageSwitcher />
+        </motion.div>
+        
+        {/* Announcement banner if there is one */}
+        {school?.currentAnnouncement && (
+          <motion.div
+            variants={itemVariants}
+            className="bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 rounded-lg p-4 mb-6 flex items-start gap-3"
+          >
+            <InfoIcon className="text-indigo-600 dark:text-indigo-400 flex-shrink-0 mt-0.5" size={20} />
+            <div>
+              <h3 className="font-medium text-indigo-800 dark:text-indigo-300">
+                Announcement
+              </h3>
+              <p className="mt-1 text-indigo-700 dark:text-indigo-200">
+                {school.currentAnnouncement}
+              </p>
             </div>
-          </div>
-        </div>
-
-        {/* Right Column */}
-        <div className="space-y-4">
-          <TasksList />
+          </motion.div>
+        )}
+        
+        {/* Top widgets row */}
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6"
+          variants={itemVariants}
+        >
+          {/* Weather widget */}
+          <WeatherWidget />
           
-          {/* Calendar Widget */}
-          <div className="bg-white rounded-lg shadow p-5">
-            <h3 className="font-semibold text-lg mb-4">Upcoming Events</h3>
-            <div className="space-y-3">
-              {[
-                { title: 'Staff Meeting', date: 'Today, 2:00 PM', location: 'Conference Room A' },
-                { title: 'Parent-Teacher Conference', date: 'Tomorrow, 4:30 PM', location: 'Main Hall' },
-                { title: 'Board Meeting', date: 'March 20, 10:00 AM', location: 'Executive Suite' }
-              ].map((event, i) => (
-                <div key={i} className="border-l-4 border-blue-500 pl-3 py-2">
-                  <h4 className="font-medium">{event.title}</h4>
-                  <p className="text-sm text-gray-600">{event.date}</p>
-                  <p className="text-xs text-gray-500">{event.location}</p>
+          {/* Quick shortcuts */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
+              Quick Access
+            </h3>
+            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-2 gap-3">
+              <motion.a
+                href="/calendar"
+                className="flex flex-col items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Calendar size={24} className="text-indigo-600 dark:text-indigo-400 mb-2" />
+                <span className="text-sm text-gray-700 dark:text-gray-300">Calendar</span>
+              </motion.a>
+              
+              <motion.a
+                href="/notifications"
+                className="flex flex-col items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Bell size={24} className="text-indigo-600 dark:text-indigo-400 mb-2" />
+                <span className="text-sm text-gray-700 dark:text-gray-300">Notifications</span>
+              </motion.a>
+              
+              <motion.a
+                href="/resources"
+                className="flex flex-col items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <InfoIcon size={24} className="text-indigo-600 dark:text-indigo-400 mb-2" />
+                <span className="text-sm text-gray-700 dark:text-gray-300">Resources</span>
+              </motion.a>
+              
+              <motion.a
+                href="/profile"
+                className="flex flex-col items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <div className="relative h-6 w-6 rounded-full overflow-hidden border border-indigo-200 dark:border-indigo-800 mb-2">
+                  {session?.user?.image ? (
+                    <img
+                      src={session.user.image}
+                      alt={session.user.name || 'User'}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="h-full w-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center text-indigo-600 dark:text-indigo-300 text-xs font-medium">
+                      {session?.user?.name?.[0] || 'U'}
+                    </div>
+                  )}
                 </div>
-              ))}
+                <span className="text-sm text-gray-700 dark:text-gray-300">Profile</span>
+              </motion.a>
             </div>
           </div>
+          
+          {/* Recent activity or third widget */}
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
+              Recent Activity
+            </h3>
+            <div className="space-y-3">
+              <div className="flex items-start gap-3">
+                <div className="h-8 w-8 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400 flex-shrink-0">
+                  <Calendar size={16} />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-700 dark:text-gray-300">
+                    Teaching staff meeting scheduled for Friday
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    2 hours ago
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="h-8 w-8 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center text-green-600 dark:text-green-400 flex-shrink-0">
+                  <Bell size={16} />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-700 dark:text-gray-300">
+                    New curriculum resources added in Teaching & Learning
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    Yesterday
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="h-8 w-8 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center text-purple-600 dark:text-purple-400 flex-shrink-0">
+                  <InfoIcon size={16} />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-700 dark:text-gray-300">
+                    SEND workshop materials updated
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    2 days ago
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+        
+        {/* News and Events section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+          <motion.div variants={itemVariants}>
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
+              Latest News
+            </h3>
+            <NewsCarousel items={school?.news || []} />
+          </motion.div>
+          
+          <motion.div variants={itemVariants}>
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
+              Upcoming Events
+            </h3>
+            <EventsCalendar events={school?.events || []} />
+          </motion.div>
         </div>
-      </div>
+        
+        {/* Modules section */}
+        <motion.div variants={itemVariants}>
+          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-3">
+            Modules
+          </h3>
+          <ModuleGrid modules={school?.enabledModules || []} />
+        </motion.div>
+      </motion.main>
+      
+      {/* Chatbot widget */}
+      <ChatbotWidget iconType="animated-sun" />
     </div>
   );
 }
