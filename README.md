@@ -1,116 +1,81 @@
-# Schoolgle - AI-Powered Tools for Educators
+# Schoolgle Intranet Platform
 
-Schoolgle helps teachers save time, reduce stress, and focus on what matters most—their students and their wellbeing.
+A comprehensive intranet platform for schools and educational institutions, designed to provide a centralized hub for communication, resources, and school management tools.
 
-## 🌟 Features
+## Features
 
-- 🧠 **AI-Powered Tools**: Lesson planning, grading assistance, and more
-- 🏫 **School Management**: Tools for administrators and business managers
-- 📊 **Data Insights**: Analytics to track student progress and teacher wellbeing
-- 🌙 **Dark Mode**: Easy on the eyes during late-night planning sessions
-- ✨ **Animated UI**: Beautiful, responsive interface with smooth animations
+- **Customizable Dashboard**: Personalized landing page with widgets for news, events, and weather.
+- **Modular Design**: Access different functional areas through color-coded modules.
+- **School-Specific Chatbot**: AI assistant trained on your school's knowledge base.
+- **Multilingual Support**: Switch between languages easily.
+- **Animated UI**: Beautiful animations and transitions for an engaging user experience.
+- **Dark Mode**: Comfortable viewing in various lighting conditions.
+- **Responsive Design**: Works on desktops, tablets, and mobile devices.
+- **Social Media Integration**: Displays the school's Twitter and Facebook feeds.
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
-
 - Node.js (v18 or later)
 - npm or yarn
+- A Supabase account for database functionality
 
 ### Installation
 
-1. Clone this repository:
-   ```bash
+1. Clone the repository:
+   ```
    git clone https://github.com/DSumm18/schoolgle-app-2024.git
    ```
 
-2. Navigate to the project directory:
-   ```bash
-   cd schoolgle-app-2024
+2. Install dependencies:
    ```
-
-3. Install dependencies:
-   ```bash
    npm install
    # or
    yarn install
    ```
 
-4. Create a `.env.local` file in the root directory with the following environment variables:
+3. Set up environment variables:
    ```
-   NEXTAUTH_URL=http://localhost:3000
-   NEXTAUTH_SECRET=your_nextauth_secret
-   
-   # Supabase credentials
-   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-   SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
-   
-   # Email provider (optional)
-   EMAIL_SERVER=smtp://username:password@smtp.example.com:587
-   EMAIL_FROM=noreply@schoolgle.app
+   cp .env.example .env.local
    ```
+   Then update the values in `.env.local` with your own credentials.
 
-5. Run the development server:
-   ```bash
+4. Run the development server:
+   ```
    npm run dev
    # or
    yarn dev
    ```
 
-6. Open [http://localhost:3000](http://localhost:3000) in your browser.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-## 💻 Tech Stack
+## Tech Stack
 
-- **Frontend**: Next.js 14 (App Router), React, TypeScript, Tailwind CSS
-- **Authentication**: NextAuth.js
-- **Database**: Supabase
+- **Frontend**: Next.js, React, TailwindCSS, Framer Motion
+- **State Management**: React Context API
+- **Styling**: TailwindCSS with custom theme
 - **Animations**: Framer Motion
-- **Deployment**: Vercel
+- **Database**: Supabase (PostgreSQL)
+- **Authentication**: NextAuth.js
+- **UI Components**: Radix UI primitives with custom styling
 
-## 📱 Responsive Design
+## Project Structure
 
-Schoolgle is designed to work beautifully on all devices:
-- Desktop computers
-- Tablets
-- Mobile phones
+- `/src/app`: Page components and routing
+- `/src/components`: Reusable UI components
+- `/src/contexts`: React context providers
+- `/src/lib`: Utility functions and libraries
+- `/src/utils`: Helper functions and services
+- `/public`: Static assets and images
 
-## 🔒 Authentication
+## Contributing
 
-We use NextAuth.js integrated with Supabase for secure authentication:
-- Email/password login
-- Magic link authentication (passwordless)
-- OAuth providers (Google, Microsoft)
+1. Fork the repository
+2. Create your feature branch: `git checkout -b feature/my-new-feature`
+3. Commit your changes: `git commit -am 'Add some feature'`
+4. Push to the branch: `git push origin feature/my-new-feature`
+5. Submit a pull request
 
-## 📁 Project Structure
+## License
 
-```
-schoolgle-app-2024/
-├── public/                 # Static files
-├── src/
-│   ├── app/                # Next.js App Router pages
-│   ├── components/         # React components
-│   ├── lib/                # Utilities and helpers
-│   └── types/              # TypeScript type definitions
-├── .env.local.example      # Example environment variables
-├── next.config.js          # Next.js configuration
-├── package.json            # Dependencies and scripts
-├── postcss.config.js       # PostCSS configuration
-└── tailwind.config.js      # Tailwind CSS configuration
-```
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 👥 About Us
-
-Schoolgle is built by educators for educators. Our mission is to reduce teacher workload and improve wellbeing across the education sector.
-
----
-
-🌐 [Visit our website](https://schoolgle.app) | 📧 [Contact us](mailto:hello@schoolgle.app)
+This project is licensed under the MIT License - see the LICENSE file for details.
