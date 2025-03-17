@@ -42,6 +42,14 @@ export interface SchoolEvent {
   category?: string;
 }
 
+export interface SchoolSocialMedia {
+  twitter?: string;  // Twitter/X handle without @
+  facebook?: string; // Facebook page name or ID
+  instagram?: string;
+  youtube?: string;
+  linkedin?: string;
+}
+
 export interface School {
   id: string;
   name: string;
@@ -54,6 +62,7 @@ export interface School {
   news?: SchoolNews[];
   events?: SchoolEvent[];
   enabledModules?: SchoolModule[];
+  socialMedia?: SchoolSocialMedia;
   settings?: Record<string, any>;
 }
 
@@ -97,6 +106,13 @@ export function SchoolProvider({ children, initialSchool }: SchoolProviderProps)
               address: 'London, UK'
             },
             currentAnnouncement: 'Welcome to the new Schoolgle Intranet! Explore our new features.',
+            socialMedia: {
+              twitter: 'SchoolgleAcad',
+              facebook: 'SchoolgleAcademy',
+              instagram: 'schoolgleacademy',
+              youtube: 'schoolgleacademy',
+              linkedin: 'schoolgle-academy'
+            },
             enabledModules: [
               {
                 id: '1',
