@@ -4,7 +4,7 @@ import { Metadata } from 'next';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { SchoolProvider } from '@/contexts/SchoolContext';
 import AuthProvider from '@/components/AuthProvider';
-import { EnhancedNavbar } from '@/components/EnhancedNavbar';
+import EnhancedNavbar from '@/components/EnhancedNavbar';
 
 const inter = Inter({ subsets: ['latin'] });
 
