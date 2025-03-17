@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import AnimatedLogo from './AnimatedLogo';
 
-export default function EnhancedNavbar() {
+const EnhancedNavbar = () => {
   const { data: session, status } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -244,4 +244,6 @@ export default function EnhancedNavbar() {
       )}
     </motion.nav>
   );
-}
+};
+
+export default EnhancedNavbar;
