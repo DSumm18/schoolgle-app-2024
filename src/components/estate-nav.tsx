@@ -1,35 +1,54 @@
-import Link from 'next/link'
+'use client';
+
+import Link from 'next/link';
 
 export default function EstateNavigation() {
+  const estateModules = [
+    {
+      id: "activity-management",
+      name: "Activity Management",
+      path: "/modules/estates/activity-management"
+    },
+    {
+      id: "risk-assessment",
+      name: "Risk Assessment",
+      path: "/modules/estates/risk-assessment"
+    },
+    {
+      id: "issue-tracker",
+      name: "School Issue Tracker",
+      path: "/modules/estates/issue-tracker"
+    },
+    {
+      id: "incidents",
+      name: "Incidents",
+      path: "/modules/estates/incidents"
+    }
+  ];
+
   return (
-    <nav className="bg-white shadow rounded-lg p-4 mb-6">
-      <h2 className="text-lg font-semibold mb-3">Estate Modules</h2>
-      <div className="flex flex-wrap gap-2">
+    <div className="mb-6">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-semibold">Estates Management</h2>
         <Link
-          href="/modules/estates/activity-management"
-          className="px-3 py-2 text-sm rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors"
+          href="/dashboard"
+          className="text-sm text-indigo-600 hover:text-indigo-800"
         >
-          Activity Management
-        </Link>
-        <Link
-          href="/modules/estates/risk-assessment"
-          className="px-3 py-2 text-sm rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors"
-        >
-          Risk Assessment
-        </Link>
-        <Link
-          href="/modules/estates/issue-tracker"
-          className="px-3 py-2 text-sm rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors"
-        >
-          Issue Tracker
-        </Link>
-        <Link
-          href="/modules/estates/incidents"
-          className="px-3 py-2 text-sm rounded-md bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors"
-        >
-          Incidents
+          Return to Dashboard
         </Link>
       </div>
-    </nav>
-  )
+      
+      <div className="flex flex-wrap gap-2 border-b pb-4 mb-6">
+        {estateModules.map(module => (
+          <Link
+            key={module.id}
+            href={module.path}
+            className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-md text-sm font-medium"
+          >
+            {module.name}
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
 }
