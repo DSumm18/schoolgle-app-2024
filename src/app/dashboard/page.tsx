@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { Calendar, Info, Shield, Bell } from 'react-icons/hi';
+import { HiCalendar, HiShieldCheck, HiBell } from 'react-icons/hi';
 import ModuleGrid from '@/components/dashboard/ModuleGrid';
 
 // Animation variants for staggered entrance
@@ -120,7 +120,7 @@ export default function DashboardPage() {
           variants={itemVariants}
           className="bg-indigo-50 border border-indigo-100 rounded-lg p-4 mb-6 flex items-start gap-3"
         >
-          <Info className="text-indigo-600 flex-shrink-0 mt-0.5" size={20} />
+          <HiBell className="text-indigo-600 flex-shrink-0 mt-0.5" size={20} />
           <div>
             <h3 className="font-medium text-indigo-800">
               Announcement
