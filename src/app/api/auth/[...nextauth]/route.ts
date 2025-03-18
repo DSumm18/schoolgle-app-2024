@@ -1,6 +1,15 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { createServerClient } from "@/utils/supabase/server";
+
+// Mock of users for demo purposes
+const mockUsers = [
+  {
+    id: "1",
+    email: "user@example.com",
+    name: "Demo User",
+    password: "password123", // In a real app, passwords would be hashed
+  },
+];
 
 const handler = NextAuth({
   providers: [
@@ -16,25 +25,23 @@ const handler = NextAuth({
         }
 
         try {
-          const supabase = createServerClient();
+          // For demo purposes, just accept any credentials
+          // In a real app, this would verify against a database
           
-          const { data, error } = await supabase.auth.signInWithPassword({
-            email: credentials.email,
-            password: credentials.password,
-          });
-
-          if (error || !data.user) {
-            console.error("Authentication error:", error);
+          // Mock user lookup
+          const user = mockUsers.find(u => u.email === credentials.email);
+          
+          if (!user || user.password !== credentials.password) {
             return null;
           }
 
           return {
-            id: data.user.id,
-            email: data.user.email,
-            name: data.user.user_metadata?.full_name || data.user.email,
+            id: user.id,
+            email: user.email,
+            name: user.name,
           };
         } catch (error) {
-          console.error("Supabase auth error:", error);
+          console.error("Auth error:", error);
           return null;
         }
       }
@@ -63,7 +70,8 @@ const handler = NextAuth({
   session: {
     strategy: "jwt",
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  // For development, using a simple secret
+  secret: process.env.NEXTAUTH_SECRET || "DEVELOPMENT_SECRET_DO_NOT_USE_IN_PRODUCTION",
 });
 
 export { handler as GET, handler as POST };
