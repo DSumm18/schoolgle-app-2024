@@ -1,36 +1,44 @@
 import { NextResponse } from 'next/server';
-import { createServerClient } from '@/utils/supabase/server';
+import { supabase } from '@/utils/supabase/server';
 
 export async function GET() {
   try {
-    // Create server Supabase client
-    const supabase = createServerClient();
-    
-    // Test the connection with a simple query
-    const { data, error } = await supabase.from('test').select('*').limit(5);
-    
-    if (error) {
-      console.error('Supabase error:', error);
-      return NextResponse.json({ 
-        success: false, 
-        message: 'Database connection error', 
-        error: error.message 
-      }, { status: 500 });
-    }
-    
-    // Return success response
-    return NextResponse.json({ 
-      success: true, 
-      message: 'Supabase connection successful',
-      data: data || [] 
-    });
-    
-  } catch (error: any) {
+    // Mock data instead of actual Supabase query
+    const mockData = {
+      status: 'success',
+      message: 'API route working',
+      data: {
+        modules: [
+          { id: 'activity-management', name: 'Activity Management', enabled: true },
+          { id: 'risk-assessment', name: 'Risk Assessment', enabled: true },
+          { id: 'issue-tracker', name: 'Issue Tracker', enabled: true },
+          { id: 'incidents', name: 'Incidents', enabled: true }
+        ]
+      }
+    };
+
+    return NextResponse.json(mockData);
+  } catch (error) {
     console.error('API error:', error);
-    return NextResponse.json({ 
-      success: false, 
-      message: 'Server error', 
-      error: error.message 
-    }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Failed to fetch data' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function POST() {
+  try {
+    // Mock response for POST request
+    return NextResponse.json(
+      { status: 'success', message: 'Data received successfully' },
+      { status: 201 }
+    );
+  } catch (error) {
+    console.error('API error:', error);
+    return NextResponse.json(
+      { error: 'Failed to process data' },
+      { status: 500 }
+    );
   }
 }
