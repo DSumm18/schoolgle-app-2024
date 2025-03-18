@@ -3,9 +3,9 @@
 
 import { createClient } from '@supabase/supabase-js';
 
-// Empty URL and key since this is a stub
-const supabaseUrl = '';
-const supabaseKey = '';
+// Use environment variables or provide default empty values for local dev
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://example.com';
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'example-key';
 
 // Create Supabase client
 export const supabase = createClient(supabaseUrl, supabaseKey, {
@@ -13,6 +13,15 @@ export const supabase = createClient(supabaseUrl, supabaseKey, {
     persistSession: false, // For demonstration only, don't persist session
   },
 });
+
+// Create server client function (needed for NextAuth)
+export const createServerClient = () => {
+  return createClient(supabaseUrl, supabaseKey, {
+    auth: {
+      persistSession: false,
+    },
+  });
+};
 
 // Helper function to get database data with authentication
 export const getAuthenticatedData = async (table: string) => {
