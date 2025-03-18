@@ -1,155 +1,120 @@
 # Schoolgle Intranet Platform
 
-A comprehensive intranet platform for schools and educational institutions, designed to provide a centralized hub for communication, resources, and school management tools.
+A modern, modular intranet platform for educational institutions, built with Next.js 14, React, and Tailwind CSS.
 
 ## Features
 
-- **Customizable Dashboard**: Personalized landing page with widgets for news, events, and weather.
-- **Modular Design**: Access different functional areas through color-coded modules.
-- **School-Specific Chatbot**: AI assistant trained on your school's knowledge base.
-- **Multilingual Support**: Switch between languages easily.
-- **Animated UI**: Beautiful animations and transitions for an engaging user experience.
-- **Dark Mode**: Comfortable viewing in various lighting conditions.
-- **Responsive Design**: Works on desktops, tablets, and mobile devices.
-- **Social Media Integration**: Displays the school's Twitter and Facebook feeds.
-- **Authentication System**: Secure user authentication with Supabase and NextAuth.js.
+- 🏢 **Estate Management Modules**
+  - Activity Management
+  - Risk Assessment
+  - School Issue Tracker
+  - Schoolgle Incidents
+- 🎨 **Modern UI/UX**
+  - Responsive design
+  - Dark/Light mode support
+  - Accessible components
+- 🔒 **Security**
+  - Role-based access control
+  - Secure authentication
+- 📱 **Mobile-First**
+  - Optimized for all devices
+  - Touch-friendly interfaces
 
 ## Getting Started
 
 ### Prerequisites
-- Node.js (v18 or later)
+
+- Node.js 18.17 or later
 - npm or yarn
-- A Supabase account for database functionality
+- Git
 
 ### Installation
 
 1. Clone the repository:
-   ```
-   git clone https://github.com/DSumm18/schoolgle-app-2024.git
-   ```
+\`\`\`bash
+git clone https://github.com/DSumm18/schoolgle-app-2024.git
+cd schoolgle-app-2024
+\`\`\`
 
 2. Install dependencies:
-   ```
-   npm install
-   # or
-   yarn install
-   ```
+\`\`\`bash
+npm install
+# or
+yarn install
+\`\`\`
 
-3. Set up environment variables:
-   ```
-   cp .env.example .env.local
-   ```
-   Then update the values in `.env.local` with your own credentials.
+3. Create a \`.env.local\` file in the root directory and add your environment variables:
+\`\`\`env
+NEXT_PUBLIC_API_URL=your_api_url
+\`\`\`
 
 4. Run the development server:
-   ```
-   npm run dev
-   # or
-   yarn dev
-   ```
+\`\`\`bash
+npm run dev
+# or
+yarn dev
+\`\`\`
 
-5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
+## Deployment
 
-## Setting Up Supabase Authentication
+The application is configured for deployment on Vercel. To deploy:
 
-1. **Create a Supabase Project**:
-   - Go to [Supabase Dashboard](https://app.supabase.io/)
-   - Click "New Project" and follow the setup wizard
-   - Choose a name, password, and region for your project
+1. Push your changes to the main branch:
+\`\`\`bash
+git add .
+git commit -m "Your commit message"
+git push origin main
+\`\`\`
 
-2. **Get Your API Keys**:
-   - After project creation, go to Project Settings > API
-   - Copy the "URL" and "anon" key to your `.env.local` file:
-     ```
-     NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-     NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
-     SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
-     ```
+2. The application will automatically deploy to Vercel.
 
-3. **Set Up the Database**:
-   - Go to the SQL Editor in your Supabase Dashboard
-   - Create the required tables by copying the contents of `schema.sql` file
-   - Run the SQL to create the tables and insert initial data
+### Manual Deployment
 
-4. **Configure Email Authentication**:
-   - Go to Authentication > Providers > Email
-   - Make sure "Enable Email Signup" is ON
-   - Configure confirmation email templates under "Email Templates"
+If you prefer to deploy manually:
 
-5. **Set Up NextAuth**:
-   - Generate a secret for NextAuth:
-     ```
-     openssl rand -base64 32
-     ```
-   - Add it to your `.env.local` file:
-     ```
-     NEXTAUTH_SECRET=your_generated_secret
-     NEXTAUTH_URL=http://localhost:3000
-     ```
-   - For production, set `NEXTAUTH_URL` to your deployment URL
+1. Install Vercel CLI:
+\`\`\`bash
+npm i -g vercel
+\`\`\`
 
-6. **Test the Authentication**:
-   - Start your development server
-   - Visit the registration page: `/register`
-   - Create a test account
-   - Check your Supabase dashboard to confirm the user was created
-   - Login with your credentials at `/login`
-   - View authentication status in the dashboard
+2. Deploy:
+\`\`\`bash
+vercel
+\`\`\`
 
-## Setting Up Environment Variables in Vercel
+## Dependencies
 
-1. Go to your Vercel project
-2. Click on "Settings" > "Environment Variables"
-3. Add all required variables from your `.env.example` file:
-   - `NEXTAUTH_URL`: Your production URL (e.g., `https://your-app.vercel.app`)
-   - `NEXTAUTH_SECRET`: Your generated secret
-   - `NEXT_PUBLIC_SUPABASE_URL`: Your Supabase project URL
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your Supabase anon key
-   - `SUPABASE_SERVICE_ROLE_KEY`: Your Supabase service role key
-4. Save and redeploy your application
-
-## Tech Stack
-
-- **Frontend**: Next.js, React, TailwindCSS, Framer Motion
-- **State Management**: React Context API
-- **Styling**: TailwindCSS with custom theme
-- **Animations**: Framer Motion
-- **Database**: Supabase (PostgreSQL)
-- **Authentication**: NextAuth.js with Supabase integration
-- **UI Components**: Radix UI primitives with custom styling
+- Next.js 14
+- React 18
+- Tailwind CSS
+- Radix UI
+- Framer Motion
+- clsx
+- tailwind-merge
 
 ## Project Structure
 
-- `/src/app`: Page components and routing
-- `/src/components`: Reusable UI components
-- `/src/contexts`: React context providers
-- `/src/lib`: Utility functions and libraries
-- `/src/utils`: Helper functions and services
-- `/public`: Static assets and images
-
-## Recent Updates (March 17, 2025)
-
-- **NEW**: Added Supabase authentication integration with NextAuth.js
-- **NEW**: Created registration and login pages with proper error handling
-- **NEW**: Added AuthStatus component for testing authentication state
-- **NEW**: Included test table and database schema for Supabase setup
-- **MAJOR FIX**: Completely simplified Next.js configuration for Vercel compatibility
-- Fixed hook naming in SchoolContext to support useSchoolContext
-- Removed all experimental features and static export settings
-- Properly configured for serverless deployment with API routes
-- Fixed all component export/import issues
-- Created simplified landing page and social media page
-- Added ThemeProvider, AuthProvider, and SchoolContext
-- Fixed AnimatedLogo component
+\`\`\`
+src/
+├── app/                    # Next.js app directory
+│   ├── admin/             # Admin pages
+│   ├── modules/           # Module pages
+│   └── page.tsx           # Home page
+├── components/            # React components
+│   ├── ui/               # UI components
+│   └── dashboard/        # Dashboard components
+├── lib/                  # Utilities and helpers
+└── styles/              # Global styles
+\`\`\`
 
 ## Contributing
 
 1. Fork the repository
-2. Create your feature branch: `git checkout -b feature/my-new-feature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin feature/my-new-feature`
-5. Submit a pull request
+2. Create your feature branch (\`git checkout -b feature/AmazingFeature\`)
+3. Commit your changes (\`git commit -m 'Add some AmazingFeature'\`)
+4. Push to the branch (\`git push origin feature/AmazingFeature\`)
+5. Open a Pull Request
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
