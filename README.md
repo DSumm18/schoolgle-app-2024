@@ -2,119 +2,94 @@
 
 A modern, modular intranet platform for educational institutions, built with Next.js 14, React, and Tailwind CSS.
 
-## Features
+## Deployment Status
 
-- 🏢 **Estate Management Modules**
-  - Activity Management
-  - Risk Assessment
-  - School Issue Tracker
-  - Schoolgle Incidents
-- 🎨 **Modern UI/UX**
-  - Responsive design
-  - Dark/Light mode support
-  - Accessible components
-- 🔒 **Security**
-  - Role-based access control
-  - Secure authentication
-- 📱 **Mobile-First**
-  - Optimized for all devices
-  - Touch-friendly interfaces
+**Ready for deployment!** This version includes:
 
-## Getting Started
+- ✅ Simplified UI implementation using standard Tailwind classes
+- ✅ All Estate modules implemented (Activity Management, Risk Assessment, Issue Tracker, Incidents)
+- ✅ Navigation between modules
+- ✅ Admin interface for module management
+- ✅ Responsive layouts
 
-### Prerequisites
+## Installation
 
-- Node.js 18.17 or later
-- npm or yarn
-- Git
-
-### Installation
-
-1. Clone the repository:
-\`\`\`bash
+```bash
+# Clone the repository
 git clone https://github.com/DSumm18/schoolgle-app-2024.git
 cd schoolgle-app-2024
-\`\`\`
 
-2. Install dependencies:
-\`\`\`bash
+# Install dependencies
 npm install
-# or
-yarn install
-\`\`\`
 
-3. Create a \`.env.local\` file in the root directory and add your environment variables:
-\`\`\`env
-NEXT_PUBLIC_API_URL=your_api_url
-\`\`\`
-
-4. Run the development server:
-\`\`\`bash
+# Run development server
 npm run dev
-# or
-yarn dev
-\`\`\`
+```
 
-## Deployment
+## Deployment Guide
 
-The application is configured for deployment on Vercel. To deploy:
+1. **Prerequisites**:
+   - Node.js 18.17 or later
+   - Vercel account connected to GitHub
 
-1. Push your changes to the main branch:
-\`\`\`bash
-git add .
-git commit -m "Your commit message"
-git push origin main
-\`\`\`
-
-2. The application will automatically deploy to Vercel.
-
-### Manual Deployment
-
-If you prefer to deploy manually:
-
-1. Install Vercel CLI:
-\`\`\`bash
-npm i -g vercel
-\`\`\`
-
-2. Deploy:
-\`\`\`bash
-vercel
-\`\`\`
-
-## Dependencies
-
-- Next.js 14
-- React 18
-- Tailwind CSS
-- Radix UI
-- Framer Motion
-- clsx
-- tailwind-merge
+2. **Deploy to Vercel**:
+   ```bash
+   # Install Vercel CLI (if not already installed)
+   npm install -g vercel
+   
+   # Deploy
+   vercel
+   ```
 
 ## Project Structure
 
-\`\`\`
-src/
-├── app/                    # Next.js app directory
-│   ├── admin/             # Admin pages
-│   ├── modules/           # Module pages
-│   └── page.tsx           # Home page
-├── components/            # React components
-│   ├── ui/               # UI components
-│   └── dashboard/        # Dashboard components
-├── lib/                  # Utilities and helpers
-└── styles/              # Global styles
-\`\`\`
+```
+schoolgle-app-2024/
+├── src/
+│   ├── app/                   # Next.js App Router
+│   │   ├── admin/             # Admin pages
+│   │   │   └── modules/       # Module administration
+│   │   ├── modules/           # Module pages
+│   │   │   └── estates/       # Estate modules
+│   │   ├── layout.tsx         # Root layout
+│   │   ├── page.tsx           # Home page
+│   │   └── globals.css        # Global styles
+│   ├── components/            # React components
+│   │   ├── estate-nav.tsx     # Estate module navigation
+│   │   ├── header.tsx         # Application header
+│   │   └── ui/                # UI components (simplified for now)
+│   └── lib/                   # Utilities
+│       └── utils.ts           # Utility functions
+├── public/                    # Static assets
+├── next.config.mjs            # Next.js configuration
+├── tailwind.config.ts         # Tailwind CSS configuration
+├── tsconfig.json              # TypeScript configuration
+├── jsconfig.json              # JavaScript path mapping
+└── package.json               # Dependencies and scripts
+```
 
-## Contributing
+## Estate Modules
 
-1. Fork the repository
-2. Create your feature branch (\`git checkout -b feature/AmazingFeature\`)
-3. Commit your changes (\`git commit -m 'Add some AmazingFeature'\`)
-4. Push to the branch (\`git push origin feature/AmazingFeature\`)
-5. Open a Pull Request
+The platform currently includes the following Estate Management modules:
 
-## License
+- **Activity Management**: Schedule and manage activities across your institution
+- **Risk Assessment**: Create and track risk assessments for safety compliance
+- **School Issue Tracker**: Track and manage maintenance issues throughout the school
+- **Schoolgle Incidents**: Report and manage incidents that occur on school grounds
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## Future Enhancements
+
+After successful deployment, we plan to:
+
+1. Introduce shadcn/ui components for enhanced UI
+2. Add user authentication and role-based access control
+3. Implement additional module categories (Finance, Teaching & Learning)
+4. Add data persistence with a database backend
+5. Implement real-time notifications and updates
+
+## Features
+
+- 🏢 **Estate Management Modules**
+- 🎨 **Modern UI/UX**
+- 🔒 **Security** (coming soon)
+- 📱 **Mobile-First Design**
