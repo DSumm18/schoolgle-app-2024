@@ -1,73 +1,95 @@
 'use client';
 
+import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { useModules } from '@/contexts/ModuleContext';
-import { SchoolModule } from '@/contexts/SchoolContext';
-import { ModuleCard } from './ModuleCard';
-import { ModuleDefinition } from '@/lib/modules/types';
 
-interface ModuleGridProps {
-  modules?: SchoolModule[]; // Support for legacy modules
-  filter?: string; // Optional category filter
+// Define interface for module objects
+interface Module {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  enabled: boolean;
+  icon: string;
+  routes: { path: string; name: string }[];
 }
 
-export default function ModuleGrid({ modules: legacyModules, filter }: ModuleGridProps) {
-  const { modules: newModules, enabledModules } = useModules();
-  
-  // Combine legacy and new modules
-  const combinedModules = [
-    ...enabledModules,
-    ...(legacyModules || []).map(legacyModule => ({
-      id: legacyModule.id,
-      name: legacyModule.name,
-      description: legacyModule.description,
-      version: '1.0.0',
-      author: 'Schoolgle',
-      category: legacyModule.code as ModuleDefinition['category'],
-      color: legacyModule.color,
-      icon: legacyModule.icon || 'BookOpen',
-      enabled: true,
-      required: false,
-      routes: [
-        {
-          path: legacyModule.route,
-          name: 'Dashboard',
-          description: `${legacyModule.name} Dashboard`,
-          isDefaultRoute: true,
-        }
-      ],
-      permissions: []
-    })),
-  ];
-  
-  // Apply category filter if provided
-  const filteredModules = filter
-    ? combinedModules.filter(module => module.category === filter)
-    : combinedModules;
-  
-  // If no modules provided, return empty grid
-  if (!filteredModules || filteredModules.length === 0) {
+// Props for the ModuleGrid component
+interface ModuleGridProps {
+  modules: Module[];
+  filter?: string;
+}
+
+// Animation variants for staggered entrance
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      when: 'beforeChildren',
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4 }
+  },
+};
+
+export default function ModuleGrid({ modules, filter = '' }: ModuleGridProps) {
+  // Filter modules based on the filter prop
+  const filteredModules = filter 
+    ? modules.filter(module => module.category === filter)
+    : modules;
+
+  // Empty state when no modules match the filter
+  if (filteredModules.length === 0) {
     return (
-      <div className="empty-state p-8 text-center bg-gray-50 dark:bg-gray-800 rounded-lg">
-        <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100">No modules available</h3>
-        <p className="mt-2 text-gray-600 dark:text-gray-400">
+      <div className="text-center py-16 bg-gray-50 rounded-lg">
+        <h3 className="text-xl font-semibold text-gray-600">No modules available</h3>
+        <p className="text-gray-500 mt-2">
           {filter 
-            ? `No ${filter} modules are currently enabled for your school.` 
-            : 'Modules will appear here when they are enabled for your school.'}
+            ? `No modules found in the ${filter} category` 
+            : "No modules have been enabled for your account"}
         </p>
       </div>
     );
   }
-  
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <motion.div 
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       {filteredModules.map((module, index) => (
-        <ModuleCard 
-          key={module.id} 
-          module={module} 
-          index={index} 
-        />
+        <motion.div
+          key={module.id}
+          className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden h-full"
+          variants={itemVariants}
+        >
+          <div className="p-6">
+            <div className="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center mb-4">
+              <div className="text-indigo-600 text-xl font-semibold">{module.name.charAt(0)}</div>
+            </div>
+            <h3 className="text-lg font-semibold mb-2">{module.name}</h3>
+            <p className="text-gray-600 text-sm mb-4">{module.description}</p>
+            
+            {module.routes && module.routes.length > 0 && (
+              <Link href={module.routes[0].path} 
+                className="inline-block px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors">
+                Open Module
+              </Link>
+            )}
+          </div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }
