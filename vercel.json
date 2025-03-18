@@ -1,13 +1,11 @@
 {
-  "version": 2,
+  "git": {
+    "deploymentEnabled": {
+      "main": true
+    }
+  },
   "buildCommand": "npm run build",
   "outputDirectory": ".next",
   "framework": "nextjs",
-  "env": {
-    "NEXTAUTH_URL": "https://schoolgle-app-2024.vercel.app",
-    "NEXTAUTH_SECRET": "schoolgle-secret-key-123",
-    "NODE_ENV": "production",
-    "NEXT_PUBLIC_SUPABASE_URL": "https://eoddcijijjrmksnwsodq.supabase.co",
-    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVvZGRjaWppampybWtzbndzb2RxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE2ODQ2MDEsImV4cCI6MjA1NzI2MDYwMX0.FN_Vg5jGHPsKeTr0AzZcvoEZD6gUAwfE6T7B4LTEDOE"
-  }
+  "cleanUrls": true
 }
