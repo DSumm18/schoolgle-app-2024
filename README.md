@@ -1,95 +1,63 @@
 # Schoolgle Intranet Platform
 
-A modern, modular intranet platform for educational institutions, built with Next.js 14, React, and Tailwind CSS.
+A comprehensive school management system with modular architecture.
 
-## Deployment Status
+## Deployment Information
 
-**Ready for deployment!** This version includes:
+This application is configured for deployment with Vercel. The current deployment includes the following features:
 
-- ✅ Simplified UI implementation using standard Tailwind classes
-- ✅ All Estate modules implemented (Activity Management, Risk Assessment, Issue Tracker, Incidents)
-- ✅ Navigation between modules
-- ✅ Admin interface for module management
-- ✅ Responsive layouts
+- Core module system for extensible functionality
+- Estate modules suite:
+  - Activity Management
+  - Risk Assessment
+  - School Issue Tracker
+  - Incidents Management
+  
+## Tech Stack
 
-## Installation
+- Next.js 14 (App Router)
+- React 18
+- TypeScript
+- Tailwind CSS
+- Framer Motion
 
-```bash
-# Clone the repository
-git clone https://github.com/DSumm18/schoolgle-app-2024.git
-cd schoolgle-app-2024
+## Deployment Instructions
 
-# Install dependencies
-npm install
+1. Fork or clone this repository
+2. Connect your Vercel account to the repository
+3. Deploy using the Vercel platform with default settings
+4. No environment variables are required for this demo version
 
-# Run development server
-npm run dev
-```
+## Module Structure
 
-## Deployment Guide
+The application is built with a modular architecture that allows for:
 
-1. **Prerequisites**:
-   - Node.js 18.17 or later
-   - Vercel account connected to GitHub
-
-2. **Deploy to Vercel**:
-   ```bash
-   # Install Vercel CLI (if not already installed)
-   npm install -g vercel
-   
-   # Deploy
-   vercel
-   ```
-
-## Project Structure
-
-```
-schoolgle-app-2024/
-├── src/
-│   ├── app/                   # Next.js App Router
-│   │   ├── admin/             # Admin pages
-│   │   │   └── modules/       # Module administration
-│   │   ├── modules/           # Module pages
-│   │   │   └── estates/       # Estate modules
-│   │   ├── layout.tsx         # Root layout
-│   │   ├── page.tsx           # Home page
-│   │   └── globals.css        # Global styles
-│   ├── components/            # React components
-│   │   ├── estate-nav.tsx     # Estate module navigation
-│   │   ├── header.tsx         # Application header
-│   │   └── ui/                # UI components (simplified for now)
-│   └── lib/                   # Utilities
-│       └── utils.ts           # Utility functions
-├── public/                    # Static assets
-├── next.config.mjs            # Next.js configuration
-├── tailwind.config.ts         # Tailwind CSS configuration
-├── tsconfig.json              # TypeScript configuration
-├── jsconfig.json              # JavaScript path mapping
-└── package.json               # Dependencies and scripts
-```
+- Enabling/disabling modules per school
+- Independent module development
+- Role-based access to modules
+- Consistent UI across all modules
 
 ## Estate Modules
 
-The platform currently includes the following Estate Management modules:
+The Estate modules manage physical aspects of school facilities:
 
-- **Activity Management**: Schedule and manage activities across your institution
-- **Risk Assessment**: Create and track risk assessments for safety compliance
-- **School Issue Tracker**: Track and manage maintenance issues throughout the school
-- **Schoolgle Incidents**: Report and manage incidents that occur on school grounds
+### Activity Management
+Track and schedule activities happening within school premises.
 
-## Future Enhancements
+### Risk Assessment
+Document and manage risk assessments for school facilities and activities.
 
-After successful deployment, we plan to:
+### School Issue Tracker
+Log, track, and resolve maintenance issues throughout the school.
 
-1. Introduce shadcn/ui components for enhanced UI
-2. Add user authentication and role-based access control
-3. Implement additional module categories (Finance, Teaching & Learning)
-4. Add data persistence with a database backend
-5. Implement real-time notifications and updates
+### Incidents
+Record and manage incidents that occur on school grounds.
 
-## Features
+## Demo Notes
 
-- 🏢 **Estate Management Modules**
-- 🎨 **Modern UI/UX**
-- 🔒 **Security** (coming soon)
-- 📱 **Mobile-First Design**
+This is a simplified version for demonstration purposes. Future versions will include:
+
+- Authentication system
+- API integration
+- Advanced UI components
+- Full suite of modules for all school departments
