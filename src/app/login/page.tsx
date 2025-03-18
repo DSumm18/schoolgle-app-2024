@@ -1,8 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { signIn } from 'next-auth/react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 export default function LoginPage() {
@@ -10,30 +9,8 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   
   const router = useRouter();
-  const searchParams = useSearchParams();
-  
-  useEffect(() => {
-    // Check for success message from registration
-    if (searchParams.get('registered') === 'true') {
-      setSuccessMessage('Registration successful! Please log in with your new account.');
-    }
-    
-    // Check for error from NextAuth
-    const errorType = searchParams.get('error');
-    if (errorType) {
-      switch (errorType) {
-        case 'CredentialsSignin':
-          setError('Invalid email or password');
-          break;
-        default:
-          setError('An error occurred during sign in');
-          break;
-      }
-    }
-  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,44 +24,27 @@ export default function LoginPage() {
       return;
     }
     
-    try {
-      setIsLoading(true);
-      
-      // Use NextAuth for authentication
-      const result = await signIn('credentials', {
-        redirect: false,
-        email,
-        password,
-      });
-      
-      if (result?.error) {
-        setError('Invalid email or password');
-        return;
-      }
-      
-      if (result?.ok) {
-        // Successful login
-        router.push('/dashboard');
-        router.refresh(); // Refresh to update session
-      }
-    } catch (err: any) {
-      console.error('Login error:', err);
-      setError(err.message || 'An error occurred during login');
-    } finally {
+    // Mock authentication for demo
+    setIsLoading(true);
+    
+    // Simulate API call delay
+    setTimeout(() => {
+      // For demo, just allow any login
       setIsLoading(false);
-    }
+      router.push('/dashboard');
+    }, 1000);
   };
 
   return (
     <div className="flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
-          <h1 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
+          <h1 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Sign in to your account
           </h1>
-          <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-2 text-center text-sm text-gray-600">
             Or{' '}
-            <Link href="/register" className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400">
+            <Link href="/register" className="font-medium text-blue-600 hover:text-blue-500">
               create a new account
             </Link>
           </p>
@@ -96,16 +56,10 @@ export default function LoginPage() {
           </div>
         )}
         
-        {successMessage && (
-          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded" role="alert">
-            <span className="block sm:inline">{successMessage}</span>
-          </div>
-        )}
-        
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="rounded-md shadow-sm space-y-4">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email address
               </label>
               <input
@@ -114,7 +68,7 @@ export default function LoginPage() {
                 type="email"
                 autoComplete="email"
                 required
-                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 sm:text-sm"
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -122,7 +76,7 @@ export default function LoginPage() {
             </div>
             
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Password
               </label>
               <input
@@ -131,7 +85,7 @@ export default function LoginPage() {
                 type="password"
                 autoComplete="current-password"
                 required
-                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 sm:text-sm"
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -147,13 +101,13 @@ export default function LoginPage() {
                 type="checkbox"
                 className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
               />
-              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900 dark:text-gray-300">
+              <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
                 Remember me
               </label>
             </div>
 
             <div className="text-sm">
-              <Link href="/forgot-password" className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400">
+              <Link href="/forgot-password" className="font-medium text-blue-600 hover:text-blue-500">
                 Forgot your password?
               </Link>
             </div>
