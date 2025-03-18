@@ -1,76 +1,67 @@
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
-type School = {
+interface School {
+  id: string;
   name: string;
-  logo: string;
-  primaryColor: string;
-  secondaryColor: string;
   address: string;
-  phone: string;
-  email: string;
-  website: string;
+  logo?: string;
+  currentAnnouncement?: string;
+  enabledModules: string[];
+  news: any[];
+  events: any[];
   socialMedia: {
-    twitter: string;
-    facebook: string;
-    instagram: string;
-    youtube: string;
-    linkedin: string;
+    twitter?: string;
+    facebook?: string;
+    instagram?: string;
   };
-};
+}
 
-type SchoolContextType = {
-  school: School;
-  updateSchool: (newSchool: Partial<School>) => void;
-};
-
-const defaultSchool: School = {
-  name: 'Schoolgle Academy',
-  logo: '/images/logo.svg',
-  primaryColor: '#3b82f6',
-  secondaryColor: '#60a5fa',
-  address: '123 Education St, Learning City, ED1 2LN',
-  phone: '+44 1234 567890',
-  email: 'info@schoolgle.edu',
-  website: 'https://schoolgle.edu',
-  socialMedia: {
-    twitter: 'schoolgle_edu',
-    facebook: 'schoolgleEdu',
-    instagram: 'schoolgle_edu',
-    youtube: 'SchoolgleEdu',
-    linkedin: 'schoolgle-education'
-  }
-};
+interface SchoolContextType {
+  school: School | null;
+  isLoading: boolean;
+  error: string | null;
+}
 
 const SchoolContext = createContext<SchoolContextType | undefined>(undefined);
 
-export function SchoolProvider({ children }: { children: ReactNode }) {
-  const [school, setSchool] = useState<School>(defaultSchool);
-
-  const updateSchool = (newSchool: Partial<School>) => {
-    setSchool(prev => ({
-      ...prev,
-      ...newSchool
-    }));
-  };
+export function SchoolProvider({ children }: { children: React.ReactNode }) {
+  const [isLoading] = useState(false);
+  const [error] = useState<string | null>(null);
+  
+  // Mock school data
+  const [school] = useState<School>({
+    id: 'school-123',
+    name: 'Schoolgle Academy',
+    address: '123 Education Street, Learnville',
+    logo: '/logo.png',
+    currentAnnouncement: 'Welcome to the Schoolgle Intranet Platform. We are testing the Estates modules deployment.',
+    enabledModules: ['activity-management', 'risk-assessment', 'issue-tracker', 'incidents'],
+    news: [],
+    events: [],
+    socialMedia: {
+      twitter: '@schoolgle'
+    }
+  });
 
   return (
-    <SchoolContext.Provider value={{ school, updateSchool }}>
+    <SchoolContext.Provider
+      value={{
+        school,
+        isLoading,
+        error
+      }}
+    >
       {children}
     </SchoolContext.Provider>
   );
 }
 
-// Export both names for compatibility with different components
-export function useSchool() {
+export const useSchoolContext = () => {
   const context = useContext(SchoolContext);
-  
   if (context === undefined) {
-    throw new Error('useSchool must be used within a SchoolProvider');
+    throw new Error('useSchoolContext must be used within a SchoolProvider');
   }
-  
   return context;
-}
-
-export const useSchoolContext = useSchool;
+};
