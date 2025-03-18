@@ -1,13 +1,14 @@
-import './globals.css'
+import '@/app/globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import Header from '@/components/header'
+import { ModuleProvider } from '@/contexts/ModuleContext'
+import { SchoolProvider } from '@/contexts/SchoolContext'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Schoolgle Intranet Platform',
-  description: 'A modern, modular intranet platform for educational institutions',
+  description: 'A comprehensive school management system',
 }
 
 export default function RootLayout({
@@ -17,11 +18,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-gray-50 min-h-screen`}>
-        <Header />
-        <main>
-          {children}
-        </main>
+      <body className={inter.className}>
+        <ModuleProvider>
+          <SchoolProvider>
+            {children}
+          </SchoolProvider>
+        </ModuleProvider>
       </body>
     </html>
   )
