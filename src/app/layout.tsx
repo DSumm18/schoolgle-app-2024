@@ -1,14 +1,16 @@
-import '@/app/globals.css'
+import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { ModuleProvider } from '@/contexts/ModuleContext'
-import { SchoolProvider } from '@/contexts/SchoolContext'
+import { Providers } from '@/components/providers'
+import { MainNav } from '@/components/main-nav'
+import { UserNav } from '@/components/user-nav'
+import { SideNav } from '@/components/side-nav'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Schoolgle Intranet Platform',
-  description: 'A comprehensive school management system',
+  title: 'Schoolgle Admin',
+  description: 'Comprehensive school management system',
 }
 
 export default function RootLayout({
@@ -17,13 +19,26 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ModuleProvider>
-          <SchoolProvider>
-            {children}
-          </SchoolProvider>
-        </ModuleProvider>
+        <Providers>
+          <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+            <header className="sticky top-0 z-50 w-full border-b bg-white dark:bg-gray-800">
+              <div className="container flex h-16 items-center px-4">
+                <MainNav />
+                <div className="ml-auto flex items-center space-x-4">
+                  <UserNav />
+                </div>
+              </div>
+            </header>
+            <div className="flex">
+              <SideNav />
+              <main className="flex-1 p-6">
+                {children}
+              </main>
+            </div>
+          </div>
+        </Providers>
       </body>
     </html>
   )
