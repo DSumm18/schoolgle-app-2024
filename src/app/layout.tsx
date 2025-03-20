@@ -13,6 +13,29 @@ export const metadata: Metadata = {
   description: 'Comprehensive school management system',
 }
 
+const sideNavItems = [
+  {
+    title: "Dashboard",
+    href: "/dashboard",
+  },
+  {
+    title: "Activities",
+    href: "/activities",
+  },
+  {
+    title: "Incidents",
+    href: "/incidents",
+  },
+  {
+    title: "Estate",
+    href: "/estate",
+  },
+  {
+    title: "Settings",
+    href: "/settings",
+  },
+]
+
 export default function RootLayout({
   children,
 }: {
@@ -32,7 +55,7 @@ export default function RootLayout({
               </div>
             </header>
             <div className="flex">
-              <SideNav />
+              <SideNav items={sideNavItems} className="w-64 p-4" />
               <main className="flex-1 p-6">
                 {children}
               </main>
