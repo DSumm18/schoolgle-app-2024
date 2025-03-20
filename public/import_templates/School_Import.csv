@@ -1,0 +1,4 @@
+SchoolName,SchoolCode,TrustCode,Address,City,Postcode,PhoneNumber,Email,Website,Headteacher,SchoolType
+Oakwood Primary,OAK001,PAY123,"12 School Lane",Bradford,BD2 4EF,01234567891,office@oakwood.sch.uk,https://www.oakwood.sch.uk,Dr. Emily Taylor,Primary
+Hollingwood Academy,HOL002,HAT456,"45 Education Drive",Leeds,LS2 7GH,01234567892,info@hollingwood.sch.uk,https://www.hollingwood.sch.uk,Mr. James Wilson,Secondary
+Westside High School,WHS003,PAY123,"78 Learning Avenue",Bradford,BD3 9IJ,01234567893,admin@westside.sch.uk,https://www.westside.sch.uk,Ms. Rebecca Brown,Secondary
