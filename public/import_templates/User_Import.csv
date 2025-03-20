@@ -1,0 +1,4 @@
+FirstName,LastName,Email,UserLevel,Estates,HR,Finance
+John,Doe,john.doe@example.com,Admin,Yes,Yes,Yes
+Jane,Smith,jane.smith@example.com,Staff,Yes,No,No
+Mark,Johnson,mark.johnson@example.com,Teacher,No,Yes,No
