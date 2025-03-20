@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { BellRing, ChevronDown } from 'lucide-react';
+import { BellRing, ChevronDown, Settings } from 'lucide-react';
 import ModuleGrid from '@/components/dashboard/ModuleGrid';
 import { PageWrapper } from '@/components/layout/page-wrapper';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 // Animation variants for staggered entrance
 const containerVariants = {
@@ -32,6 +34,7 @@ export default function DashboardPage() {
   const [activeCategory, setActiveCategory] = useState('');
   const [currentDate, setCurrentDate] = useState('');
   const [currentTime, setCurrentTime] = useState('');
+  const [isAdmin, setIsAdmin] = useState(true); // Mock admin status, would come from authentication in real app
   
   // Mock data
   const mockModules = [
@@ -132,8 +135,20 @@ export default function DashboardPage() {
             </h2>
             <p className="text-gray-500 dark:text-gray-400 mt-1">{currentDate}</p>
           </div>
-          <div className="px-4 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
-            <p className="text-indigo-600 dark:text-indigo-400 font-medium">{currentTime}</p>
+          <div className="flex items-center gap-4">
+            <div className="px-4 py-2 bg-white dark:bg-gray-800 rounded-lg shadow-sm">
+              <p className="text-indigo-600 dark:text-indigo-400 font-medium">{currentTime}</p>
+            </div>
+            
+            {/* Admin link - only visible to admin users */}
+            {isAdmin && (
+              <Link href="/admin" passHref>
+                <Button variant="outline" size="sm" className="flex items-center gap-2">
+                  <Settings className="h-4 w-4" />
+                  <span>Admin</span>
+                </Button>
+              </Link>
+            )}
           </div>
         </motion.div>
         
