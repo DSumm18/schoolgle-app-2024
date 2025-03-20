@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Activity, AlertTriangle, Tool, AlertCircle, ArrowRight } from 'lucide-react';
+import { Activity, AlertTriangle, AlertCircle, ArrowRight, Wrench } from 'lucide-react';
 
 // Define interface for module objects
 interface Module {
@@ -46,7 +46,7 @@ const itemVariants = {
 const iconMap: Record<string, React.ReactNode> = {
   'Calendar': <Activity className="w-5 h-5" />,
   'Shield': <AlertTriangle className="w-5 h-5" />,
-  'Tool': <Tool className="w-5 h-5" />,
+  'Tool': <Wrench className="w-5 h-5" />,
   'AlertTriangle': <AlertCircle className="w-5 h-5" />
 };
 
@@ -92,9 +92,9 @@ export default function ModuleGrid({ modules, filter = '' }: ModuleGridProps) {
   // Empty state when no modules match the filter
   if (filteredModules.length === 0) {
     return (
-      <div className="text-center py-16 bg-gray-50 rounded-lg">
-        <h3 className="text-xl font-semibold text-gray-600">No modules available</h3>
-        <p className="text-gray-500 mt-2">
+      <div className="text-center py-16 bg-gray-50 dark:bg-gray-800 rounded-lg">
+        <h3 className="text-xl font-semibold text-gray-600 dark:text-gray-300">No modules available</h3>
+        <p className="text-gray-500 dark:text-gray-400 mt-2">
           {filter 
             ? `No modules found in the ${filter} category` 
             : "No modules have been enabled for your account"}
@@ -121,7 +121,7 @@ export default function ModuleGrid({ modules, filter = '' }: ModuleGridProps) {
         return (
           <motion.div
             key={module.id}
-            className={`rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 bg-white group ${style.hoverBg}`}
+            className={`rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 bg-white dark:bg-gray-800 group ${style.hoverBg} dark:hover:bg-gray-700`}
             variants={itemVariants}
             whileHover={{ y: -5 }}
           >
@@ -134,8 +134,8 @@ export default function ModuleGrid({ modules, filter = '' }: ModuleGridProps) {
                   </div>
                 </div>
                 <div className="ml-3">
-                  <h3 className="text-lg font-bold text-gray-800">{module.name}</h3>
-                  <p className="text-gray-600 text-sm mt-1">{module.description}</p>
+                  <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100">{module.name}</h3>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm mt-1">{module.description}</p>
                 </div>
               </div>
               
