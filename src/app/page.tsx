@@ -2,13 +2,17 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import { AnimatedLogo } from '@/components/ui/animated-logo';
 
 export default function HomePage() {
   return (
     <div className="flex flex-col min-h-screen">
       <header className="bg-white shadow-sm p-4">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <h1 className="text-xl font-bold text-gray-900">Schoolgle Intranet</h1>
+          <h1 className="text-xl font-bold text-gray-900">
+            <AnimatedLogo />
+            <span className="ml-2">Intranet</span>
+          </h1>
           <nav className="flex gap-4">
             <Link href="/" className="text-indigo-600 font-medium">Home</Link>
             <Link href="/landing" className="text-gray-600 hover:text-gray-900">Public Site</Link>
@@ -21,14 +25,17 @@ export default function HomePage() {
       <main className="flex-1 bg-gradient-to-b from-indigo-50 to-white">
         <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <motion.h1 
-              className="text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl"
+            <motion.div 
+              className="text-4xl font-extrabold text-gray-900 sm:text-5xl sm:tracking-tight lg:text-6xl inline-block"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              Schoolgle Intranet Platform
-            </motion.h1>
+              <span className="inline-block transform scale-150 mb-4">
+                <AnimatedLogo />
+              </span>
+              <span className="block mt-2">Intranet Platform</span>
+            </motion.div>
             <motion.p 
               className="mt-5 max-w-xl mx-auto text-xl text-gray-500"
               initial={{ opacity: 0, y: 20 }}
@@ -124,9 +131,14 @@ export default function HomePage() {
 
       <footer className="bg-white border-t border-gray-200 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-gray-500">
-            &copy; {new Date().getFullYear()} Schoolgle Intranet Platform. All rights reserved.
-          </p>
+          <div className="flex flex-col items-center justify-center">
+            <div className="mb-4">
+              <AnimatedLogo />
+            </div>
+            <p className="text-center text-gray-500">
+              &copy; {new Date().getFullYear()} Schoolgle Intranet Platform. All rights reserved.
+            </p>
+          </div>
         </div>
       </footer>
     </div>
