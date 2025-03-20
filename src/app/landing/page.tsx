@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { AnimatedLogo } from "@/components/ui/animated-logo";
 import Link from "next/link";
 import { ArrowRight, CheckCircle, Layers, Shield, Users } from "lucide-react";
 
@@ -13,7 +14,9 @@ export default function LandingPage() {
             <div className="flex flex-col justify-center space-y-4">
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-                  Schoolgle
+                  <span className="inline-block">
+                    <AnimatedLogo />
+                  </span>
                 </h1>
                 <p className="text-lg text-muted-foreground sm:text-xl">
                   A comprehensive school management system with modular architecture
@@ -178,6 +181,9 @@ export default function LandingPage() {
       <footer className="w-full py-6 md:py-12 bg-gray-100 dark:bg-gray-950">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center gap-4 text-center">
+            <div className="text-center">
+              <AnimatedLogo />
+            </div>
             <div className="flex flex-col md:flex-row gap-4 md:gap-8">
               <Link href="#" className="text-sm hover:underline">
                 Privacy Policy
