@@ -11,6 +11,7 @@ export default function HomePage() {
           <h1 className="text-xl font-bold text-gray-900">Schoolgle Intranet</h1>
           <nav className="flex gap-4">
             <Link href="/" className="text-indigo-600 font-medium">Home</Link>
+            <Link href="/landing" className="text-gray-600 hover:text-gray-900">Public Site</Link>
             <Link href="/dashboard" className="text-gray-600 hover:text-gray-900">Dashboard</Link>
             <Link href="/login" className="text-gray-600 hover:text-gray-900">Login</Link>
           </nav>
@@ -49,10 +50,10 @@ export default function HomePage() {
                 View Dashboard
               </Link>
               <Link 
-                href="/modules/estates/incidents" 
+                href="/landing" 
                 className="px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-gray-50 border-indigo-200"
               >
-                View Estate Modules
+                Visit Public Site
               </Link>
             </motion.div>
           </div>
