@@ -1,158 +1,159 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
-import { HoldingPage } from "@/components/holding-page";
-import { BookOpen, BookText, FileCheck, PenTool, Settings, ChevronRight } from "lucide-react";
+'use client';
+
+import { PageWrapper } from "@/components/layout/page-wrapper";
+import { HoldingPage } from "@/app/components/holding-page";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { BookCopy, BookOpen, FileSpreadsheet, Settings, Edit3 } from "lucide-react";
+import Link from "next/link";
 
 export default function TeachingLearningAdminPage() {
   return (
-    <div className="flex-1 space-y-4">
-      <div className="flex items-center justify-between space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight">Teaching & Learning</h2>
-        <div className="flex items-center space-x-2">
-          <p className="text-sm text-muted-foreground">Configure Teaching & Learning applications</p>
+    <PageWrapper title="Teaching & Learning Admin">
+      <div className="container mx-auto py-10 px-4">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-2 text-gray-900 dark:text-gray-100">Teaching & Learning</h1>
+          <p className="text-gray-600 dark:text-gray-400">Configure your teaching and learning applications.</p>
         </div>
+
+        <Tabs defaultValue="overview" className="w-full">
+          <TabsList className="mb-8">
+            <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="lesson-planner">Lesson Planner</TabsTrigger>
+            <TabsTrigger value="assessment-manager">Assessment Manager</TabsTrigger>
+            <TabsTrigger value="writing-assessment">Writing Assessment</TabsTrigger>
+            <TabsTrigger value="settings">Module Settings</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="overview">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              {/* Lesson Planner Card */}
+              <Card className="shadow-md hover:shadow-lg transition-shadow">
+                <CardHeader className="bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <CardTitle className="text-xl mb-1">Lesson Planner</CardTitle>
+                      <CardDescription>Plan and organize lessons</CardDescription>
+                    </div>
+                    <BookOpen className="text-blue-500 h-8 w-8" />
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-4">
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                    Create, manage, and distribute lesson plans. Set up templates and share resources across your school.
+                  </p>
+                </CardContent>
+                <CardFooter>
+                  <Link href="/admin/teaching/lesson-planner" className="text-blue-600 dark:text-blue-400 hover:underline text-sm font-medium">
+                    Configure Lesson Planner →
+                  </Link>
+                </CardFooter>
+              </Card>
+
+              {/* Assessment Manager Card */}
+              <Card className="shadow-md hover:shadow-lg transition-shadow">
+                <CardHeader className="bg-gradient-to-r from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <CardTitle className="text-xl mb-1">Assessment Manager</CardTitle>
+                      <CardDescription>Track and analyze student progress</CardDescription>
+                    </div>
+                    <FileSpreadsheet className="text-green-500 h-8 w-8" />
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-4">
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                    Set up assessment frameworks, create marking schemes, and manage student data for tracking progress.
+                  </p>
+                </CardContent>
+                <CardFooter>
+                  <Link href="/admin/teaching/assessment-manager" className="text-green-600 dark:text-green-400 hover:underline text-sm font-medium">
+                    Configure Assessment Manager →
+                  </Link>
+                </CardFooter>
+              </Card>
+
+              {/* Writing Assessment Card */}
+              <Card className="shadow-md hover:shadow-lg transition-shadow">
+                <CardHeader className="bg-gradient-to-r from-purple-50 to-purple-100 dark:from-purple-900/20 dark:to-purple-800/20">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <CardTitle className="text-xl mb-1">Writing Assessment</CardTitle>
+                      <CardDescription>Evaluate and improve student writing</CardDescription>
+                    </div>
+                    <Edit3 className="text-purple-500 h-8 w-8" />
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-4">
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                    Define writing criteria, create evaluation rubrics, and track student writing development over time.
+                  </p>
+                </CardContent>
+                <CardFooter>
+                  <Link href="/admin/teaching/writing-assessment" className="text-purple-600 dark:text-purple-400 hover:underline text-sm font-medium">
+                    Configure Writing Assessment →
+                  </Link>
+                </CardFooter>
+              </Card>
+            </div>
+
+            {/* Module Configuration Card */}
+            <Card className="shadow-md mb-6">
+              <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <CardTitle className="text-xl mb-1">Module Configuration</CardTitle>
+                    <CardDescription>Manage Teaching & Learning module settings</CardDescription>
+                  </div>
+                  <Settings className="text-gray-500 h-6 w-6" />
+                </div>
+              </CardHeader>
+              <CardContent className="pt-4">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                  Configure global settings for the Teaching & Learning module, including access controls,
+                  default templates, and integration with other school systems.
+                </p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="lesson-planner">
+            <HoldingPage 
+              title="Lesson Planner Configuration" 
+              description="This is where you'll configure the Lesson Planner application, including templates, resource libraries, and user permissions."
+              icon={<BookOpen className="h-16 w-16 text-blue-500" />}
+              comingSoon={true}
+            />
+          </TabsContent>
+
+          <TabsContent value="assessment-manager">
+            <HoldingPage 
+              title="Assessment Manager Configuration" 
+              description="This is where you'll set up assessment frameworks, reporting structures, and data visualization preferences."
+              icon={<FileSpreadsheet className="h-16 w-16 text-green-500" />}
+              comingSoon={true}
+            />
+          </TabsContent>
+
+          <TabsContent value="writing-assessment">
+            <HoldingPage 
+              title="Writing Assessment Configuration" 
+              description="This is where you'll define writing criteria, customize rubrics, and set up progress tracking parameters."
+              icon={<Edit3 className="h-16 w-16 text-purple-500" />}
+              comingSoon={true}
+            />
+          </TabsContent>
+
+          <TabsContent value="settings">
+            <HoldingPage 
+              title="Module Settings" 
+              description="Configure global settings for the Teaching & Learning module, including access controls, defaults, and integrations."
+              icon={<Settings className="h-16 w-16 text-gray-500" />}
+              comingSoon={true}
+            />
+          </TabsContent>
+        </Tabs>
       </div>
-      
-      <Tabs defaultValue="overview" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="lesson-planner">Lesson Planner</TabsTrigger>
-          <TabsTrigger value="assessment-manager">Assessment Manager</TabsTrigger>
-          <TabsTrigger value="writing-assessment">Writing Assessment</TabsTrigger>
-          <TabsTrigger value="settings">Module Settings</TabsTrigger>
-        </TabsList>
-        
-        <TabsContent value="overview" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Lesson Planner
-                </CardTitle>
-                <BookText className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-sm">
-                  Create and manage lesson plans for teachers
-                </div>
-                <div className="flex items-center pt-4">
-                  <span className="text-xs text-muted-foreground">Configure</span>
-                  <ChevronRight className="h-3 w-3 ml-1 text-muted-foreground" />
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Assessment Manager
-                </CardTitle>
-                <FileCheck className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-sm">
-                  Track and analyze student assessments
-                </div>
-                <div className="flex items-center pt-4">
-                  <span className="text-xs text-muted-foreground">Configure</span>
-                  <ChevronRight className="h-3 w-3 ml-1 text-muted-foreground" />
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Writing Assessment
-                </CardTitle>
-                <PenTool className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-sm">
-                  Tools for assessing and improving student writing
-                </div>
-                <div className="flex items-center pt-4">
-                  <span className="text-xs text-muted-foreground">Configure</span>
-                  <ChevronRight className="h-3 w-3 ml-1 text-muted-foreground" />
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-          
-          <Card>
-            <CardHeader>
-              <CardTitle>Teaching & Learning Module</CardTitle>
-              <CardDescription>Configuration and settings for all teaching and learning applications</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">
-                This module provides tools for educators to plan lessons, assess student performance, and track academic progress.
-                Configure module-wide settings and individual application settings from this dashboard.
-              </p>
-              
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="border rounded-md p-4">
-                  <h3 className="font-medium mb-2 flex items-center">
-                    <Settings className="h-4 w-4 mr-2" />
-                    Common Settings
-                  </h3>
-                  <ul className="text-sm space-y-1 text-muted-foreground">
-                    <li>• Academic year configuration</li>
-                    <li>• Curriculum frameworks</li>
-                    <li>• Assessment periods</li>
-                    <li>• Subject terminology</li>
-                  </ul>
-                </div>
-                
-                <div className="border rounded-md p-4">
-                  <h3 className="font-medium mb-2 flex items-center">
-                    <BookOpen className="h-4 w-4 mr-2" />
-                    Module Integrations
-                  </h3>
-                  <ul className="text-sm space-y-1 text-muted-foreground">
-                    <li>• MIS system integration</li>
-                    <li>• Calendar synchronization</li>
-                    <li>• Parent portal access</li>
-                    <li>• Data export formats</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-        
-        <TabsContent value="lesson-planner" className="space-y-4">
-          <HoldingPage 
-            title="Lesson Planner" 
-            description="Configure settings for the Lesson Planner application. You'll be able to set up templates, define curriculum structures, and manage sharing permissions."
-            icon={<BookText className="h-12 w-12 text-primary/40" />}
-          />
-        </TabsContent>
-        
-        <TabsContent value="assessment-manager" className="space-y-4">
-          <HoldingPage 
-            title="Assessment Manager" 
-            description="Configure settings for the Assessment Manager application. You'll be able to define grading scales, assessment types, and reporting templates."
-            icon={<FileCheck className="h-12 w-12 text-primary/40" />}
-          />
-        </TabsContent>
-        
-        <TabsContent value="writing-assessment" className="space-y-4">
-          <HoldingPage 
-            title="Writing Assessment" 
-            description="Configure settings for the Writing Assessment application. You'll be able to set up writing frameworks, rubrics, and feedback templates."
-            icon={<PenTool className="h-12 w-12 text-primary/40" />}
-          />
-        </TabsContent>
-        
-        <TabsContent value="settings" className="space-y-4">
-          <HoldingPage 
-            title="Module Settings" 
-            description="Configure module-wide settings for Teaching & Learning. These settings will apply across all applications in this module."
-            icon={<Settings className="h-12 w-12 text-primary/40" />}
-          />
-        </TabsContent>
-      </Tabs>
-    </div>
+    </PageWrapper>
   );
 }
