@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card'
 
-// Simple mock auth function that doesn't rely on next-auth
+// Simple mock auth function
 const mockSignIn = async (provider, options) => {
   console.log('Using mock sign-in function', provider, options);
   
@@ -41,7 +41,7 @@ export default function SignIn() {
       if (result?.error) {
         setError('Invalid credentials')
       } else {
-        router.push('/admin/dashboard')
+        router.push('/admin')
       }
     } catch (error) {
       setError('An error occurred. Please try again.')
