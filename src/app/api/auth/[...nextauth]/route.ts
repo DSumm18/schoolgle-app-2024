@@ -1,1 +1,8 @@
-// Handling for cases where next-auth might not be installed yet\nlet NextAuth: any;\nlet authOptions: any;\n\ntry {\n  NextAuth = require(\"next-auth\").default;\n  authOptions = require(\"@/lib/auth\").authOptions;\n} catch (e) {\n  console.warn(\"next-auth not available, using stub implementation\");\n  \n  // Simple stub for NextAuth function\n  NextAuth = (options: any) => {\n    return {\n      GET: async () => new Response(\"Auth API not available\"),\n      POST: async () => new Response(\"Auth API not available\")\n    };\n  };\n  \n  // Load stub auth options\n  authOptions = require(\"@/lib/auth-stub\").authOptions;\n}\n\nconst handler = NextAuth(authOptions);\n\nexport { handler as GET, handler as POST }
+// Simplified fallback for next-auth API route
+export async function GET() {
+  return new Response('Auth API stub - GET');
+}
+
+export async function POST() {
+  return new Response('Auth API stub - POST');
+}
