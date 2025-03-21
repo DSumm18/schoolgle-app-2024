@@ -38,10 +38,8 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <ThemeProvider
-          attribute="class"
           defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
+          enableSystem={true}
         >
           <main className="flex flex-col min-h-screen">
             {children}
