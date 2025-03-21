@@ -1,131 +1,131 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
-import { HoldingPage } from "@/components/holding-page";
-import { DollarSign, Database, BarChart2, Settings, ChevronRight } from "lucide-react";
+'use client';
+
+import { PageWrapper } from "@/components/layout/page-wrapper";
+import { HoldingPage } from "@/app/components/holding-page";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Briefcase, DollarSign, Settings } from "lucide-react";
+import Link from "next/link";
 
 export default function FinanceAdminPage() {
   return (
-    <div className="flex-1 space-y-4">
-      <div className="flex items-center justify-between space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight">Finance</h2>
-        <div className="flex items-center space-x-2">
-          <p className="text-sm text-muted-foreground">Configure Finance applications</p>
+    <PageWrapper title="Finance Admin">
+      <div className="container mx-auto py-10 px-4">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-2 text-gray-900 dark:text-gray-100">Finance</h1>
+          <p className="text-gray-600 dark:text-gray-400">Configure your finance applications.</p>
         </div>
+
+        <Tabs defaultValue="overview" className="w-full">
+          <TabsList className="mb-8">
+            <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="asset-management">Asset Management</TabsTrigger>
+            <TabsTrigger value="payroll-checker">Payroll Checker</TabsTrigger>
+            <TabsTrigger value="settings">Module Settings</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="overview">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              {/* Asset Management Card */}
+              <Card className="shadow-md hover:shadow-lg transition-shadow">
+                <CardHeader className="bg-gradient-to-r from-emerald-50 to-emerald-100 dark:from-emerald-900/20 dark:to-emerald-800/20">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <CardTitle className="text-xl mb-1">Asset Management</CardTitle>
+                      <CardDescription>Track and manage school assets</CardDescription>
+                    </div>
+                    <Briefcase className="text-emerald-500 h-8 w-8" />
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-4">
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                    Catalog, track, and manage school assets. Set up depreciation schedules and maintenance reminders.
+                  </p>
+                </CardContent>
+                <CardFooter>
+                  <Link href="/admin/finance/asset-management" className="text-emerald-600 dark:text-emerald-400 hover:underline text-sm font-medium">
+                    Configure Asset Management →
+                  </Link>
+                </CardFooter>
+              </Card>
+
+              {/* Payroll Checker Card */}
+              <Card className="shadow-md hover:shadow-lg transition-shadow">
+                <CardHeader className="bg-gradient-to-r from-rose-50 to-rose-100 dark:from-rose-900/20 dark:to-rose-800/20">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <CardTitle className="text-xl mb-1">Payroll Checker</CardTitle>
+                      <CardDescription>Verify and manage payroll information</CardDescription>
+                    </div>
+                    <DollarSign className="text-rose-500 h-8 w-8" />
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-4">
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                    Validate payroll data, manage salary schedules, and track staff payment information.
+                  </p>
+                </CardContent>
+                <CardFooter>
+                  <Link href="/admin/finance/payroll-checker" className="text-rose-600 dark:text-rose-400 hover:underline text-sm font-medium">
+                    Configure Payroll Checker →
+                  </Link>
+                </CardFooter>
+              </Card>
+
+              {/* Module Configuration Card */}
+              <Card className="shadow-md hover:shadow-lg transition-shadow">
+                <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <CardTitle className="text-xl mb-1">Module Configuration</CardTitle>
+                      <CardDescription>Manage Finance module settings</CardDescription>
+                    </div>
+                    <Settings className="text-gray-500 h-6 w-6" />
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-4">
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                    Configure global settings for the Finance module, including access controls,
+                    accounting periods, and budget configurations.
+                  </p>
+                </CardContent>
+                <CardFooter>
+                  <Link href="/admin/finance/settings" className="text-gray-600 dark:text-gray-400 hover:underline text-sm font-medium">
+                    Configure Module Settings →
+                  </Link>
+                </CardFooter>
+              </Card>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="asset-management">
+            <HoldingPage 
+              title="Asset Management Configuration" 
+              description="This is where you'll configure the Asset Management application, including asset categories, depreciation schedules, and maintenance tracking."
+              icon={<Briefcase className="h-16 w-16 text-emerald-500" />}
+              comingSoon={true}
+            />
+          </TabsContent>
+
+          <TabsContent value="payroll-checker">
+            <HoldingPage 
+              title="Payroll Checker Configuration" 
+              description="This is where you'll set up payroll validation rules, salary schedules, and payment tracking parameters."
+              icon={<DollarSign className="h-16 w-16 text-rose-500" />}
+              comingSoon={true}
+            />
+          </TabsContent>
+
+          <TabsContent value="settings">
+            <HoldingPage 
+              title="Module Settings" 
+              description="Configure global settings for the Finance module, including access controls, accounting periods, and budget configurations."
+              icon={<Settings className="h-16 w-16 text-gray-500" />}
+              comingSoon={true}
+            />
+          </TabsContent>
+        </Tabs>
       </div>
-      
-      <Tabs defaultValue="overview" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="asset-management">Asset Management</TabsTrigger>
-          <TabsTrigger value="payroll-checker">Payroll Checker</TabsTrigger>
-          <TabsTrigger value="settings">Module Settings</TabsTrigger>
-        </TabsList>
-        
-        <TabsContent value="overview" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Asset Management
-                </CardTitle>
-                <Database className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-sm">
-                  Track and manage school assets and inventory
-                </div>
-                <div className="flex items-center pt-4">
-                  <span className="text-xs text-muted-foreground">Configure</span>
-                  <ChevronRight className="h-3 w-3 ml-1 text-muted-foreground" />
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Payroll Checker
-                </CardTitle>
-                <BarChart2 className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-sm">
-                  Verify and analyze payroll data
-                </div>
-                <div className="flex items-center pt-4">
-                  <span className="text-xs text-muted-foreground">Configure</span>
-                  <ChevronRight className="h-3 w-3 ml-1 text-muted-foreground" />
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-          
-          <Card>
-            <CardHeader>
-              <CardTitle>Finance Module</CardTitle>
-              <CardDescription>Configuration and settings for all finance applications</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">
-                This module provides tools for managing financial aspects of school operations.
-                Configure module-wide settings and individual application settings from this dashboard.
-              </p>
-              
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="border rounded-md p-4">
-                  <h3 className="font-medium mb-2 flex items-center">
-                    <Settings className="h-4 w-4 mr-2" />
-                    Common Settings
-                  </h3>
-                  <ul className="text-sm space-y-1 text-muted-foreground">
-                    <li>• Financial year configuration</li>
-                    <li>• Budget categories</li>
-                    <li>• Approval thresholds</li>
-                    <li>• Report templates</li>
-                  </ul>
-                </div>
-                
-                <div className="border rounded-md p-4">
-                  <h3 className="font-medium mb-2 flex items-center">
-                    <DollarSign className="h-4 w-4 mr-2" />
-                    Module Integrations
-                  </h3>
-                  <ul className="text-sm space-y-1 text-muted-foreground">
-                    <li>• Accounting software integration</li>
-                    <li>• Payroll system connections</li>
-                    <li>• Purchase order systems</li>
-                    <li>• Banking interfaces</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-        
-        <TabsContent value="asset-management" className="space-y-4">
-          <HoldingPage 
-            title="Asset Management" 
-            description="Configure settings for the Asset Management application. You'll be able to define asset categories, depreciation schedules, and inventory tracking parameters."
-            icon={<Database className="h-12 w-12 text-primary/40" />}
-          />
-        </TabsContent>
-        
-        <TabsContent value="payroll-checker" className="space-y-4">
-          <HoldingPage 
-            title="Payroll Checker" 
-            description="Configure settings for the Payroll Checker application. You'll be able to define salary scales, allowances, and verification rules."
-            icon={<BarChart2 className="h-12 w-12 text-primary/40" />}
-          />
-        </TabsContent>
-        
-        <TabsContent value="settings" className="space-y-4">
-          <HoldingPage 
-            title="Module Settings" 
-            description="Configure module-wide settings for Finance. These settings will apply across all applications in this module."
-            icon={<Settings className="h-12 w-12 text-primary/40" />}
-          />
-        </TabsContent>
-      </Tabs>
-    </div>
+    </PageWrapper>
   );
 }
