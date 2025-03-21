@@ -1,1 +1,129 @@
-'use client'\n\nimport { useState } from 'react'\nimport { useRouter } from 'next/navigation'\nimport { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card'\n\n// Stub for signIn function when next-auth is not available\nconst stubSignIn = async (provider: string, options: any) => {\n  console.warn('next-auth/react not available, using stub implementation');\n  // Just pretend to authenticate and return mock result\n  if (options.email === 'admin@school.com' && options.password === 'admin') {\n    return { error: null };\n  } \n  return { error: 'Invalid credentials' };\n};\n\n// Try to import signIn from next-auth, use stub if not available\nlet signIn: any;\ntry {\n  signIn = require('next-auth/react').signIn;\n} catch (e) {\n  signIn = stubSignIn;\n}\n\nexport default function SignIn() {\n  const router = useRouter()\n  const [error, setError] = useState('')\n  const [loading, setLoading] = useState(false)\n\n  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {\n    e.preventDefault()\n    setError('')\n    setLoading(true)\n\n    const formData = new FormData(e.currentTarget)\n    const email = formData.get('email') as string\n    const password = formData.get('password') as string\n\n    try {\n      const result = await signIn('credentials', {\n        email,\n        password,\n        redirect: false,\n      })\n\n      if (result?.error) {\n        setError('Invalid credentials')\n      } else {\n        router.push('/admin/dashboard')\n      }\n    } catch (error) {\n      setError('An error occurred. Please try again.')\n    } finally {\n      setLoading(false)\n    }\n  }\n\n  return (\n    <div className=\"min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 px-4\">\n      <Card className=\"w-full max-w-md\">\n        <CardHeader>\n          <div className=\"text-center\">\n            <h1 className=\"text-2xl font-bold\">Welcome Back</h1>\n            <p className=\"text-sm text-muted-foreground mt-2\">\n              Sign in to access your school&apos;s admin panel\n            </p>\n          </div>\n        </CardHeader>\n        <CardContent>\n          <form onSubmit={handleSubmit} className=\"space-y-4\">\n            <div className=\"space-y-2\">\n              <label\n                htmlFor=\"email\"\n                className=\"text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70\"\n              >\n                Email\n              </label>\n              <input\n                id=\"email\"\n                name=\"email\"\n                type=\"email\"\n                autoComplete=\"email\"\n                required\n                className=\"flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50\"\n              />\n            </div>\n            <div className=\"space-y-2\">\n              <label\n                htmlFor=\"password\"\n                className=\"text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70\"\n              >\n                Password\n              </label>\n              <input\n                id=\"password\"\n                name=\"password\"\n                type=\"password\"\n                autoComplete=\"current-password\"\n                required\n                className=\"flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50\"\n              />\n            </div>\n            {error && (\n              <div className=\"text-sm text-red-500 text-center\">{error}</div>\n            )}\n            <button\n              type=\"submit\"\n              disabled={loading}\n              className=\"inline-flex w-full items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50\"\n            >\n              {loading ? 'Signing in...' : 'Sign In'}\n            </button>\n          </form>\n        </CardContent>\n        <CardFooter className=\"flex flex-col space-y-4\">\n          <div className=\"text-sm text-center text-muted-foreground\">\n            <a href=\"#\" className=\"hover:text-primary underline underline-offset-4\">\n              Forgot your password?\n            </a>\n          </div>\n        </CardFooter>\n      </Card>\n    </div>\n  )\n}
+'use client'
+
+import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card'
+
+// Stub for signIn function when next-auth is not available
+const stubSignIn = async (provider, options) => {
+  console.warn('next-auth/react not available, using stub implementation');
+  // Just pretend to authenticate and return mock result
+  if (options.email === 'admin@school.com' && options.password === 'admin') {
+    return { error: null };
+  } 
+  return { error: 'Invalid credentials' };
+};
+
+// Try to import signIn from next-auth, use stub if not available
+let signIn;
+try {
+  const nextAuth = require('next-auth/react');
+  signIn = nextAuth.signIn;
+} catch (e) {
+  signIn = stubSignIn;
+}
+
+export default function SignIn() {
+  const router = useRouter()
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
+
+    const formData = new FormData(e.currentTarget)
+    const email = formData.get('email')
+    const password = formData.get('password')
+
+    try {
+      const result = await signIn('credentials', {
+        email,
+        password,
+        redirect: false,
+      })
+
+      if (result?.error) {
+        setError('Invalid credentials')
+      } else {
+        router.push('/admin/dashboard')
+      }
+    } catch (error) {
+      setError('An error occurred. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 px-4">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <div className="text-center">
+            <h1 className="text-2xl font-bold">Welcome Back</h1>
+            <p className="text-sm text-muted-foreground mt-2">
+              Sign in to access your school&apos;s admin panel
+            </p>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <label
+                htmlFor="email"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Email
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+              />
+            </div>
+            <div className="space-y-2">
+              <label
+                htmlFor="password"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                required
+                className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+              />
+            </div>
+            {error && (
+              <div className="text-sm text-red-500 text-center">{error}</div>
+            )}
+            <button
+              type="submit"
+              disabled={loading}
+              className="inline-flex w-full items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+            >
+              {loading ? 'Signing in...' : 'Sign In'}
+            </button>
+          </form>
+        </CardContent>
+        <CardFooter className="flex flex-col space-y-4">
+          <div className="text-sm text-center text-muted-foreground">
+            <a href="#" className="hover:text-primary underline underline-offset-4">
+              Forgot your password?
+            </a>
+          </div>
+          <div className="text-sm text-center text-muted-foreground">
+            <p>Demo credentials: admin@school.com / admin</p>
+          </div>
+        </CardFooter>
+      </Card>
+    </div>
+  )
+}
