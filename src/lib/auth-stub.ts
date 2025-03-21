@@ -1,0 +1,1 @@
+// This is a placeholder auth implementation\nexport const authOptions = { providers: [] }
