@@ -4,24 +4,17 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card'
 
-// Stub for signIn function when next-auth is not available
-const stubSignIn = async (provider, options) => {
-  console.warn('next-auth/react not available, using stub implementation');
-  // Just pretend to authenticate and return mock result
-  if (options.email === 'admin@school.com' && options.password === 'admin') {
+// Simple mock auth function that doesn't rely on next-auth
+const mockSignIn = async (provider, options) => {
+  console.log('Using mock sign-in function', provider, options);
+  
+  // For demo purposes, hard-code admin credentials
+  if (options?.email === 'admin@school.com' && options?.password === 'admin') {
     return { error: null };
-  } 
+  }
+  
   return { error: 'Invalid credentials' };
 };
-
-// Try to import signIn from next-auth, use stub if not available
-let signIn;
-try {
-  const nextAuth = require('next-auth/react');
-  signIn = nextAuth.signIn;
-} catch (e) {
-  signIn = stubSignIn;
-}
 
 export default function SignIn() {
   const router = useRouter()
@@ -38,7 +31,8 @@ export default function SignIn() {
     const password = formData.get('password')
 
     try {
-      const result = await signIn('credentials', {
+      // Use the mock sign-in function directly
+      const result = await mockSignIn('credentials', {
         email,
         password,
         redirect: false,
@@ -114,11 +108,6 @@ export default function SignIn() {
           </form>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
-          <div className="text-sm text-center text-muted-foreground">
-            <a href="#" className="hover:text-primary underline underline-offset-4">
-              Forgot your password?
-            </a>
-          </div>
           <div className="text-sm text-center text-muted-foreground">
             <p>Demo credentials: admin@school.com / admin</p>
           </div>
