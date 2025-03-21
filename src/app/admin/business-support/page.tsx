@@ -1,158 +1,159 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
-import { HoldingPage } from "@/components/holding-page";
-import { Briefcase, FileText, Users, ClipboardCheck, Settings, ChevronRight } from "lucide-react";
+'use client';
+
+import { PageWrapper } from "@/components/layout/page-wrapper";
+import { HoldingPage } from "@/app/components/holding-page";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { FileText, Calendar, UserCheck, Settings } from "lucide-react";
+import Link from "next/link";
 
 export default function BusinessSupportAdminPage() {
   return (
-    <div className="flex-1 space-y-4">
-      <div className="flex items-center justify-between space-y-2">
-        <h2 className="text-3xl font-bold tracking-tight">School Business Support</h2>
-        <div className="flex items-center space-x-2">
-          <p className="text-sm text-muted-foreground">Configure School Business Support applications</p>
+    <PageWrapper title="School Business Support Admin">
+      <div className="container mx-auto py-10 px-4">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-2 text-gray-900 dark:text-gray-100">School Business Support</h1>
+          <p className="text-gray-600 dark:text-gray-400">Configure your school business support applications.</p>
         </div>
+
+        <Tabs defaultValue="overview" className="w-full">
+          <TabsList className="mb-8">
+            <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="policy-manager">Policy Manager</TabsTrigger>
+            <TabsTrigger value="meeting-assistant">Meeting Assistant</TabsTrigger>
+            <TabsTrigger value="sign-in">Sign In</TabsTrigger>
+            <TabsTrigger value="settings">Module Settings</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="overview">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              {/* Policy Manager Card */}
+              <Card className="shadow-md hover:shadow-lg transition-shadow">
+                <CardHeader className="bg-gradient-to-r from-amber-50 to-amber-100 dark:from-amber-900/20 dark:to-amber-800/20">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <CardTitle className="text-xl mb-1">Policy Manager</CardTitle>
+                      <CardDescription>Create and manage school policies</CardDescription>
+                    </div>
+                    <FileText className="text-amber-500 h-8 w-8" />
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-4">
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                    Create, manage, and distribute school policies. Set up review schedules and track policy acknowledgements.
+                  </p>
+                </CardContent>
+                <CardFooter>
+                  <Link href="/admin/business-support/policy-manager" className="text-amber-600 dark:text-amber-400 hover:underline text-sm font-medium">
+                    Configure Policy Manager →
+                  </Link>
+                </CardFooter>
+              </Card>
+
+              {/* Meeting Assistant Card */}
+              <Card className="shadow-md hover:shadow-lg transition-shadow">
+                <CardHeader className="bg-gradient-to-r from-cyan-50 to-cyan-100 dark:from-cyan-900/20 dark:to-cyan-800/20">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <CardTitle className="text-xl mb-1">Meeting Assistant</CardTitle>
+                      <CardDescription>Schedule and document meetings</CardDescription>
+                    </div>
+                    <Calendar className="text-cyan-500 h-8 w-8" />
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-4">
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                    Schedule, manage, and document meetings. Create agenda templates and automatically distribute minutes.
+                  </p>
+                </CardContent>
+                <CardFooter>
+                  <Link href="/admin/business-support/meeting-assistant" className="text-cyan-600 dark:text-cyan-400 hover:underline text-sm font-medium">
+                    Configure Meeting Assistant →
+                  </Link>
+                </CardFooter>
+              </Card>
+
+              {/* Sign In Card */}
+              <Card className="shadow-md hover:shadow-lg transition-shadow">
+                <CardHeader className="bg-gradient-to-r from-indigo-50 to-indigo-100 dark:from-indigo-900/20 dark:to-indigo-800/20">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <CardTitle className="text-xl mb-1">Sign In</CardTitle>
+                      <CardDescription>Digital visitor and staff sign-in</CardDescription>
+                    </div>
+                    <UserCheck className="text-indigo-500 h-8 w-8" />
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-4">
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                    Configure digital sign-in systems for visitors, staff, and students. Set up custom fields and notifications.
+                  </p>
+                </CardContent>
+                <CardFooter>
+                  <Link href="/admin/business-support/sign-in" className="text-indigo-600 dark:text-indigo-400 hover:underline text-sm font-medium">
+                    Configure Sign In →
+                  </Link>
+                </CardFooter>
+              </Card>
+            </div>
+
+            {/* Module Configuration Card */}
+            <Card className="shadow-md mb-6">
+              <CardHeader className="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <CardTitle className="text-xl mb-1">Module Configuration</CardTitle>
+                    <CardDescription>Manage School Business Support settings</CardDescription>
+                  </div>
+                  <Settings className="text-gray-500 h-6 w-6" />
+                </div>
+              </CardHeader>
+              <CardContent className="pt-4">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                  Configure global settings for the School Business Support module, including access controls,
+                  default templates, and integration with other school systems.
+                </p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="policy-manager">
+            <HoldingPage 
+              title="Policy Manager Configuration" 
+              description="This is where you'll configure the Policy Manager application, including policy templates, review schedules, and distribution settings."
+              icon={<FileText className="h-16 w-16 text-amber-500" />}
+              comingSoon={true}
+            />
+          </TabsContent>
+
+          <TabsContent value="meeting-assistant">
+            <HoldingPage 
+              title="Meeting Assistant Configuration" 
+              description="This is where you'll set up meeting templates, agenda formats, and minutes distribution settings."
+              icon={<Calendar className="h-16 w-16 text-cyan-500" />}
+              comingSoon={true}
+            />
+          </TabsContent>
+
+          <TabsContent value="sign-in">
+            <HoldingPage 
+              title="Sign In Configuration" 
+              description="This is where you'll customize sign-in forms, visitor badges, and notification settings."
+              icon={<UserCheck className="h-16 w-16 text-indigo-500" />}
+              comingSoon={true}
+            />
+          </TabsContent>
+
+          <TabsContent value="settings">
+            <HoldingPage 
+              title="Module Settings" 
+              description="Configure global settings for the School Business Support module, including access controls, defaults, and integrations."
+              icon={<Settings className="h-16 w-16 text-gray-500" />}
+              comingSoon={true}
+            />
+          </TabsContent>
+        </Tabs>
       </div>
-      
-      <Tabs defaultValue="overview" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="policy-manager">Policy Manager</TabsTrigger>
-          <TabsTrigger value="meeting-assistant">Meeting Assistant</TabsTrigger>
-          <TabsTrigger value="sign-in">Sign In</TabsTrigger>
-          <TabsTrigger value="settings">Module Settings</TabsTrigger>
-        </TabsList>
-        
-        <TabsContent value="overview" className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Policy Manager
-                </CardTitle>
-                <FileText className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-sm">
-                  Create, manage, and distribute school policies
-                </div>
-                <div className="flex items-center pt-4">
-                  <span className="text-xs text-muted-foreground">Configure</span>
-                  <ChevronRight className="h-3 w-3 ml-1 text-muted-foreground" />
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Meeting Assistant
-                </CardTitle>
-                <Users className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-sm">
-                  Schedule, manage, and document meetings
-                </div>
-                <div className="flex items-center pt-4">
-                  <span className="text-xs text-muted-foreground">Configure</span>
-                  <ChevronRight className="h-3 w-3 ml-1 text-muted-foreground" />
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card className="cursor-pointer hover:bg-accent/50 transition-colors">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Sign In
-                </CardTitle>
-                <ClipboardCheck className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-sm">
-                  Digital visitor and staff sign-in system
-                </div>
-                <div className="flex items-center pt-4">
-                  <span className="text-xs text-muted-foreground">Configure</span>
-                  <ChevronRight className="h-3 w-3 ml-1 text-muted-foreground" />
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-          
-          <Card>
-            <CardHeader>
-              <CardTitle>School Business Support Module</CardTitle>
-              <CardDescription>Configuration and settings for all business support applications</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground mb-4">
-                This module provides tools for school administrators to manage policies, meetings, and visitors.
-                Configure module-wide settings and individual application settings from this dashboard.
-              </p>
-              
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="border rounded-md p-4">
-                  <h3 className="font-medium mb-2 flex items-center">
-                    <Settings className="h-4 w-4 mr-2" />
-                    Common Settings
-                  </h3>
-                  <ul className="text-sm space-y-1 text-muted-foreground">
-                    <li>• User permissions</li>
-                    <li>• Document templates</li>
-                    <li>• Notification preferences</li>
-                    <li>• Data retention policies</li>
-                  </ul>
-                </div>
-                
-                <div className="border rounded-md p-4">
-                  <h3 className="font-medium mb-2 flex items-center">
-                    <Briefcase className="h-4 w-4 mr-2" />
-                    Module Integrations
-                  </h3>
-                  <ul className="text-sm space-y-1 text-muted-foreground">
-                    <li>• Calendar integration</li>
-                    <li>• Email notifications</li>
-                    <li>• Document storage</li>
-                    <li>• Staff directory access</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-        
-        <TabsContent value="policy-manager" className="space-y-4">
-          <HoldingPage 
-            title="Policy Manager" 
-            description="Configure settings for the Policy Manager application. You'll be able to define policy categories, approval workflows, and review schedules."
-            icon={<FileText className="h-12 w-12 text-primary/40" />}
-          />
-        </TabsContent>
-        
-        <TabsContent value="meeting-assistant" className="space-y-4">
-          <HoldingPage 
-            title="Meeting Assistant" 
-            description="Configure settings for the Meeting Assistant application. You'll be able to set up meeting templates, agenda structures, and minute-taking formats."
-            icon={<Users className="h-12 w-12 text-primary/40" />}
-          />
-        </TabsContent>
-        
-        <TabsContent value="sign-in" className="space-y-4">
-          <HoldingPage 
-            title="Sign In" 
-            description="Configure settings for the Sign In application. You'll be able to customize visitor types, ID requirements, and health & safety agreements."
-            icon={<ClipboardCheck className="h-12 w-12 text-primary/40" />}
-          />
-        </TabsContent>
-        
-        <TabsContent value="settings" className="space-y-4">
-          <HoldingPage 
-            title="Module Settings" 
-            description="Configure module-wide settings for School Business Support. These settings will apply across all applications in this module."
-            icon={<Settings className="h-12 w-12 text-primary/40" />}
-          />
-        </TabsContent>
-      </Tabs>
-    </div>
+    </PageWrapper>
   );
 }
