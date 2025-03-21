@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import { HoldingPage } from "@/components/holding-page";
 import { Briefcase, FileText, Users, ClipboardCheck, Settings, ChevronRight } from "lucide-react";
 
