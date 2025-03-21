@@ -1,24 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
-    // !! WARN !!
-    // Ignoring TypeScript errors to allow the build to complete
-    // Remove this in production when all type errors are fixed
-    ignoreBuildErrors: true,
+  // We'll remove the export option to enable API routes
+  // output: 'export',
+  // Enabling image optimization
+  images: {
+    domains: ['example.com'],
   },
-  eslint: {
-    // Ignoring ESLint errors to allow the build to complete
-    ignoreDuringBuilds: true,
-  },
-  // Using standard server-side rendering for API compatibility
-  // NOT using static export (removed output: 'export')
-  
-  // Allow images from any domain
-  images: { 
-    domains: ['*'],
-    unoptimized: true 
-  },
-  // No experimental features
 }
 
 module.exports = nextConfig
