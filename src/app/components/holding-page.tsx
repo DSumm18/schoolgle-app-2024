@@ -7,13 +7,15 @@ interface HoldingPageProps {
   description?: string;
   icon?: ReactNode;
   comingSoon?: boolean;
+  features?: string[]; // Added features property
 }
 
 export function HoldingPage({ 
   title, 
   description, 
   icon, 
-  comingSoon = true 
+  comingSoon = true,
+  features = [] // Added features parameter with default empty array
 }: HoldingPageProps) {
   return (
     <div className="flex flex-col items-center justify-center text-center p-8 max-w-4xl mx-auto">
@@ -29,6 +31,16 @@ export function HoldingPage({
         <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-2xl">
           {description}
         </p>
+      )}
+      
+      {features && features.length > 0 && (
+        <div className="mt-2 mb-6 text-left w-full max-w-2xl">
+          <ul className="list-disc pl-5 space-y-1 text-gray-600 dark:text-gray-400">
+            {features.map((feature, index) => (
+              <li key={index}>{feature}</li>
+            ))}
+          </ul>
+        </div>
       )}
       
       {comingSoon && (
