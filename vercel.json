@@ -1,1 +1,5 @@
-{\n  \"git\": {\n    \"deploymentEnabled\": {\n      \"main\": false\n    }\n  }\n}
+{
+  "git": {
+    "deploymentEnabled": false
+  }
+}
