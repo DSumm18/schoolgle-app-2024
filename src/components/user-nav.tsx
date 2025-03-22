@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useSession, signOut } from 'next-auth/react'
+import { useSession, signOut } from '@/lib/mock-auth'
 
 export function UserNav() {
   const { data: session } = useSession()

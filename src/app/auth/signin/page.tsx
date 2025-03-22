@@ -3,7 +3,7 @@
 import { useState, FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card'
-import { signIn } from 'next-auth/react'
+import { signIn } from '@/lib/mock-auth'
 
 export default function SignIn() {
   const router = useRouter()
@@ -29,18 +29,6 @@ export default function SignIn() {
       if (result?.error) {
         setError('Invalid credentials')
       } else {
-        // Store mock session in localStorage for static sites
-        if (typeof window !== 'undefined') {
-          const mockSession = {
-            user: {
-              name: 'School Admin',
-              email: email,
-              role: 'admin'
-            },
-            expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
-          }
-          localStorage.setItem('mockSession', JSON.stringify(mockSession))
-        }
         router.push('/admin/dashboard')
       }
     } catch (error) {
