@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card'
 
@@ -36,21 +36,15 @@ const stubSignIn = async (provider: string, options: SignInOptions): Promise<Sig
   return { error: 'Invalid credentials' };
 };
 
-// Try to import signIn from next-auth, use stub if not available
-let signIn: typeof stubSignIn;
-try {
-  const nextAuth = require('next-auth/react');
-  signIn = nextAuth.signIn;
-} catch (e) {
-  signIn = stubSignIn;
-}
+// Always use the stub since next-auth isn't installed
+const signIn = stubSignIn;
 
 export default function SignIn() {
   const router = useRouter()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setError('')
     setLoading(true)
