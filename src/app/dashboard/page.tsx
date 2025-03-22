@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from '@/lib/motion';
 import { BellRing, ChevronDown, Settings } from 'lucide-react';
 import ModuleGrid from '@/components/dashboard/ModuleGrid';
 import { PageWrapper } from '@/components/layout/page-wrapper';
