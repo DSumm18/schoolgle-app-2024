@@ -228,7 +228,7 @@ export default function TrustTab() {
     // Extract headers (first line)
     const headerLine = lines[0];
     const headers = headerLine.split(',').map(header => 
-      header.replace(/^"/, '').replace(/"$/, '').trim()
+      header.replace(/^\"/, '').replace(/\"$/, '').trim()
     );
     
     // Create a mapping from CSV headers to our data model
@@ -284,7 +284,7 @@ export default function TrustTab() {
       headers.forEach((header, index) => {
         const mappedField = fieldMapping[header];
         if (mappedField && index < values.length) {
-          const value = values[index].replace(/^"/, '').replace(/"$/, '');
+          const value = values[index].replace(/^\"/, '').replace(/\"$/, '');
           
           // Handle numeric fields
           if (mappedField === 'numberOfSchools') {
