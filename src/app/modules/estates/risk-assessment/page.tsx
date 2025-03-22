@@ -51,7 +51,11 @@ export default function RiskAssessmentPage() {
               </div>
               <div className="h-4 bg-gray-200 rounded-full overflow-hidden mt-2 relative">
                 <div className="absolute inset-0">
-                  <div className="h-full bg-gradient-to-r from-green-500 via-yellow-500 to-red-500 w-[64%]"></div>
+                  <div className="h-full flex w-[64%]">
+                    <div className="h-full bg-green-500 flex-1"></div>
+                    <div className="h-full bg-yellow-500 flex-1"></div>
+                    <div className="h-full bg-red-500 flex-1"></div>
+                  </div>
                 </div>
               </div>
             </div>
