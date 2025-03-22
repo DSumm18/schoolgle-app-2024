@@ -3,41 +3,7 @@
 import { useState, FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card'
-
-// Simple mock auth function
-const mockSignIn = async (provider: string, options: { email?: string; password?: string; redirect?: boolean }) => {
-  console.log('Using mock sign-in function', provider, options);
-  
-  // For demo purposes, hard-code admin credentials
-  if (options.email === 'admin@school.com' && options.password === 'admin') {
-    return { error: null };
-  }
-  return { error: 'Invalid credentials' };
-};
-
-// Define types for the sign-in function parameters
-type SignInOptions = {
-  email?: string;
-  password?: string;
-  redirect?: boolean;
-};
-
-type SignInResult = {
-  error: string | null;
-};
-
-// Stub for signIn function when next-auth is not available
-const stubSignIn = async (provider: string, options: SignInOptions): Promise<SignInResult> => {
-  console.warn('next-auth/react not available, using stub implementation');
-  // Just pretend to authenticate and return mock result
-  if (options.email === 'admin@school.com' && options.password === 'admin') {
-    return { error: null };
-  } 
-  return { error: 'Invalid credentials' };
-};
-
-// Always use the stub since next-auth isn't installed
-const signIn = stubSignIn;
+import { signIn } from 'next-auth/react'
 
 export default function SignIn() {
   const router = useRouter()
@@ -50,8 +16,8 @@ export default function SignIn() {
     setLoading(true)
 
     const formData = new FormData(e.currentTarget)
-    const email = formData.get('email')
-    const password = formData.get('password')
+    const email = formData.get('email') as string
+    const password = formData.get('password') as string
 
     try {
       const result = await signIn('credentials', {
@@ -63,6 +29,18 @@ export default function SignIn() {
       if (result?.error) {
         setError('Invalid credentials')
       } else {
+        // Store mock session in localStorage for static sites
+        if (typeof window !== 'undefined') {
+          const mockSession = {
+            user: {
+              name: 'School Admin',
+              email: email,
+              role: 'admin'
+            },
+            expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
+          }
+          localStorage.setItem('mockSession', JSON.stringify(mockSession))
+        }
         router.push('/admin/dashboard')
       }
     } catch (error) {
