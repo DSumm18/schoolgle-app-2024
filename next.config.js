@@ -6,8 +6,10 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  // Use transpilePackages to handle modules that need special handling
-  transpilePackages: ['next-auth'],
+  // Add static fallbacks for window.location.origin
+  env: {
+    NEXTAUTH_URL: 'http://localhost:3000',
+  },
 }
 
 module.exports = nextConfig

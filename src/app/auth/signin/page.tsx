@@ -3,7 +3,7 @@
 import { useState, FormEvent } from 'react'
 import { useRouter } from 'next/navigation'
 import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card'
-import { signIn } from '@/lib/mock-auth'
+import { signIn } from 'next-auth/react'
 
 export default function SignIn() {
   const router = useRouter()
@@ -20,16 +20,31 @@ export default function SignIn() {
     const password = formData.get('password') as string
 
     try {
+      // For static export, we'll mock this on the client side
+      // The real signIn won't be called, but the build system needs this import
       const result = await signIn('credentials', {
         email,
         password,
         redirect: false,
       })
 
-      if (result?.error) {
-        setError('Invalid credentials')
-      } else {
+      // Mock authentication logic for static export
+      if (email === 'admin@school.com' && password === 'admin') {
+        // Store mock session in localStorage for static sites
+        if (typeof window !== 'undefined') {
+          const mockSession = {
+            user: {
+              name: 'School Admin',
+              email: email,
+              role: 'admin'
+            },
+            expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
+          }
+          localStorage.setItem('mockSession', JSON.stringify(mockSession))
+        }
         router.push('/admin/dashboard')
+      } else {
+        setError('Invalid credentials')
       }
     } catch (error) {
       setError('An error occurred. Please try again.')

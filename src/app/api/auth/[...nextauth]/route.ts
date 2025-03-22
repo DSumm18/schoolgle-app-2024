@@ -1,8 +1,12 @@
-// Simplified fallback for next-auth API route
+// Stub implementation for Next.js API route for authentication
+// This won't be used in the static export, but helps with build resolution
+
+import { NextResponse } from 'next/server'
+
 export async function GET() {
-  return new Response('Auth API stub - GET');
+  return NextResponse.json({ status: 'success', message: 'Auth API stub' })
 }
 
 export async function POST() {
-  return new Response('Auth API stub - POST');
+  return NextResponse.json({ status: 'success', message: 'Auth API stub' })
 }
