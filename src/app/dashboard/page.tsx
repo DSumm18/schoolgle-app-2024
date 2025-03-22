@@ -118,7 +118,7 @@ export default function DashboardPage() {
   
   return (
     <PageWrapper title="Dashboard">
-      <motion.main
+      <motion.div
         className="flex-1 px-4 lg:px-8 py-8 max-w-7xl mx-auto w-full"
         variants={containerVariants}
         initial="hidden"
@@ -221,7 +221,7 @@ export default function DashboardPage() {
             filter={activeCategory}
           />
         </motion.div>
-      </motion.main>
+      </motion.div>
     </PageWrapper>
   );
 }
