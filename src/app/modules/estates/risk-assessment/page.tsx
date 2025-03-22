@@ -49,8 +49,10 @@ export default function RiskAssessmentPage() {
                 <span>High Risk</span>
                 <span className="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs">2</span>
               </div>
-              <div className="h-4 bg-gray-200 rounded-full overflow-hidden mt-2">
-                <div className="h-4 bg-gradient-to-r from-green-500 via-yellow-500 to-red-500" style={{ width: '64%' }}></div>
+              <div className="h-4 bg-gray-200 rounded-full overflow-hidden mt-2 relative">
+                <div className="absolute inset-0">
+                  <div className="h-full bg-gradient-to-r from-green-500 via-yellow-500 to-red-500 w-[64%]"></div>
+                </div>
               </div>
             </div>
           </div>
