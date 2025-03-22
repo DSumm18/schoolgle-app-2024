@@ -2,7 +2,7 @@
 
 import { ThemeProvider } from 'next-themes'
 import { SessionProvider } from 'next-auth/react'
-import { Toaster } from 'sonner'
+import { Toaster } from '../lib/dummy-sonner'
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
