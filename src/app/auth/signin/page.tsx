@@ -5,16 +5,45 @@ import { useRouter } from 'next/navigation'
 import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card'
 
 // Simple mock auth function
-const mockSignIn = async (provider, options) => {
+const mockSignIn = async (provider: string, options: { email?: string; password?: string; redirect?: boolean }) => {
   console.log('Using mock sign-in function', provider, options);
   
   // For demo purposes, hard-code admin credentials
-  if (options?.email === 'admin@school.com' && options?.password === 'admin') {
+  if (options.email === 'admin@school.com' && options.password === 'admin') {
     return { error: null };
   }
-  
   return { error: 'Invalid credentials' };
 };
+
+// Define types for the sign-in function parameters
+type SignInOptions = {
+  email?: string;
+  password?: string;
+  redirect?: boolean;
+};
+
+type SignInResult = {
+  error: string | null;
+};
+
+// Stub for signIn function when next-auth is not available
+const stubSignIn = async (provider: string, options: SignInOptions): Promise<SignInResult> => {
+  console.warn('next-auth/react not available, using stub implementation');
+  // Just pretend to authenticate and return mock result
+  if (options.email === 'admin@school.com' && options.password === 'admin') {
+    return { error: null };
+  } 
+  return { error: 'Invalid credentials' };
+};
+
+// Try to import signIn from next-auth, use stub if not available
+let signIn: typeof stubSignIn;
+try {
+  const nextAuth = require('next-auth/react');
+  signIn = nextAuth.signIn;
+} catch (e) {
+  signIn = stubSignIn;
+}
 
 export default function SignIn() {
   const router = useRouter()
@@ -31,8 +60,7 @@ export default function SignIn() {
     const password = formData.get('password')
 
     try {
-      // Use the mock sign-in function directly
-      const result = await mockSignIn('credentials', {
+      const result = await signIn('credentials', {
         email,
         password,
         redirect: false,
@@ -41,7 +69,7 @@ export default function SignIn() {
       if (result?.error) {
         setError('Invalid credentials')
       } else {
-        router.push('/admin')
+        router.push('/admin/dashboard')
       }
     } catch (error) {
       setError('An error occurred. Please try again.')
@@ -108,6 +136,11 @@ export default function SignIn() {
           </form>
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
+          <div className="text-sm text-center text-muted-foreground">
+            <a href="#" className="hover:text-primary underline underline-offset-4">
+              Forgot your password?
+            </a>
+          </div>
           <div className="text-sm text-center text-muted-foreground">
             <p>Demo credentials: admin@school.com / admin</p>
           </div>
