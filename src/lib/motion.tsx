@@ -23,6 +23,9 @@ export const motion = {
   div: ({ children, className, ...props }: MotionProps) => {
     return <div className={className}>{children}</div>;
   },
+  main: ({ children, className, ...props }: MotionProps) => {
+    return <main className={className}>{children}</main>;
+  },
   section: ({ children, className, ...props }: MotionProps) => {
     return <section className={className}>{children}</section>;
   },
