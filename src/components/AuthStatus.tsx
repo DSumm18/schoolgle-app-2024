@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { createBrowserClient } from '@/utils/supabase/client';
+import { supabase, getSession } from '@/utils/supabase/client';
 import { useSession } from 'next-auth/react';
 
 export default function AuthStatus() {
@@ -39,8 +39,8 @@ export default function AuthStatus() {
   // Test Supabase client
   const testSupabaseClient = async () => {
     try {
-      const supabase = createBrowserClient();
-      const { data, error } = await supabase.auth.getSession();
+      // Use the imported supabase client instead of creating a new one
+      const { data, error } = await getSession();
       
       if (error) {
         console.error('Supabase client error:', error);
