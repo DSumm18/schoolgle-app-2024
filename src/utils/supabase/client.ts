@@ -20,6 +20,11 @@ const mockSession = {
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
+// Added for compatibility with components using this pattern
+export const createBrowserClient = () => {
+  return supabase;
+};
+
 // Get user session
 export const getSession = async () => {
   // In a real app, this would fetch the actual session
