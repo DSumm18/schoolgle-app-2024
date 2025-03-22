@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from '@/lib/motion';
 import { PageWrapper } from '@/components/layout/page-wrapper';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tab-components';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
