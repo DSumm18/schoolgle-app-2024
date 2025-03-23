@@ -5,7 +5,17 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Calendar } from 'lucide-react';
-import { SchoolNews } from '@/contexts/SchoolContext';
+
+// Define SchoolNews interface directly in this file
+interface SchoolNews {
+  id: string;
+  title: string;
+  content: string;
+  imageUrl?: string;
+  publishedAt: string;
+  author?: string;
+  isFeatured?: boolean;
+}
 
 interface NewsCarouselProps {
   items: SchoolNews[];
