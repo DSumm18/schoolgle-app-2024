@@ -3,7 +3,18 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Calendar, Clock, MapPin } from 'lucide-react';
-import { SchoolEvent } from '@/contexts/SchoolContext';
+
+// Define the SchoolEvent interface directly in the file instead of importing it
+interface SchoolEvent {
+  id: string;
+  title: string;
+  description?: string;
+  startTime: string;
+  endTime: string;
+  location?: string;
+  category?: string;
+  allDay?: boolean;
+}
 
 // Event category colors
 const categoryColors: Record<string, { bg: string; text: string }> = {
