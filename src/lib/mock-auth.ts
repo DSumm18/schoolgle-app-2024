@@ -18,22 +18,27 @@ interface SessionContextType {
   status: 'authenticated' | 'unauthenticated' | 'loading'
 }
 
-// Create a context for our mock session
-const SessionContext = createContext<SessionContextType>({
-  data: null,
-  status: 'unauthenticated'
-})
-
-// Create a namespace for SessionContext to match expected usage with Provider
-// This is needed because the code expects to use SessionContext.Provider
+// Create a namespace for SessionContext with its implementation inside
 export namespace SessionContext {
-  export const Provider = SessionContext.Provider;
+  // Internal context
+  const _context = createContext<SessionContextType>({
+    data: null,
+    status: 'unauthenticated'
+  })
+  
+  // Export Provider and Consumer
+  export const Provider = _context.Provider
+  export const Consumer = _context.Consumer
+  
+  // Helper to use the context
+  export function useContext() {
+    return useContext(_context)
+  }
 }
 
 // Mock version of useSession hook
 export function useSession() {
-  const context = useContext(SessionContext)
-  return context
+  return SessionContext.useContext()
 }
 
 // Mock version of signIn function
