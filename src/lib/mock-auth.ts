@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext as reactUseContext } from 'react'
+import React, { useState, useEffect, createContext, useContext as reactUseContext } from 'react'
 
 // Define types for our mocked auth system
 export interface User {
@@ -18,21 +18,22 @@ interface SessionContextType {
   status: 'authenticated' | 'unauthenticated' | 'loading'
 }
 
-// Create the context directly (no namespace)
-const SessionContextInternal = createContext<SessionContextType>({
+// Create the context directly
+const InternalContext = createContext<SessionContextType>({
   data: null,
   status: 'unauthenticated'
 })
 
-// Export the context with its components
-export const SessionContext = {
-  Provider: SessionContextInternal.Provider,
-  Consumer: SessionContextInternal.Consumer
+// Export a helper to use the context
+export function useSessionContext() {
+  return reactUseContext(InternalContext)
 }
 
-// Helper to use the context
-export function useSessionContext() {
-  return reactUseContext(SessionContextInternal)
+// Export the SessionContext components in a way that doesn't conflict with namespace
+export const SessionContext = {
+  // Don't try to use these providers directly in JSX, use the SessionProvider component below
+  _provider: InternalContext.Provider,
+  _consumer: InternalContext.Consumer
 }
 
 // Mock version of useSession hook
@@ -94,11 +95,10 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
     }
   }, [])
   
-  // Use the provider directly
-  const ContextProvider = SessionContext.Provider
-  return (
-    <ContextProvider value={{ data: session, status }}>
-      {children}
-    </ContextProvider>
+  // Use React.createElement instead of JSX to avoid TypeScript errors
+  return React.createElement(
+    InternalContext.Provider,
+    { value: { data: session, status } },
+    children
   )
 }
