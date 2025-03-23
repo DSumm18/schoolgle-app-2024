@@ -24,10 +24,15 @@ export interface SessionContextValue {
 }
 
 // Create SessionContext
-export const SessionContext = createContext<SessionContextValue>({
+const SessionContext = createContext<SessionContextValue>({
   data: null,
   status: 'unauthenticated'
 });
+
+// Create a namespace for SessionContext to match expected usage with Provider
+export namespace SessionContext {
+  export const Provider = SessionContext.Provider;
+}
 
 // SessionProvider component
 export function SessionProvider({ children }: { children: ReactNode }) {
