@@ -23,15 +23,22 @@ export interface SessionContextValue {
   update?: (data?: any) => Promise<Session | null>;
 }
 
-// Create SessionContext
-const SessionContext = createContext<SessionContextValue>({
-  data: null,
-  status: 'unauthenticated'
-});
-
-// Create a namespace for SessionContext to match expected usage with Provider
+// Create SessionContext using a namespace approach to fix TypeScript errors
 export namespace SessionContext {
-  export const Provider = SessionContext.Provider;
+  // Internal context
+  const _context = createContext<SessionContextValue>({
+    data: null,
+    status: 'unauthenticated'
+  });
+  
+  // Export the Provider and Consumer
+  export const Provider = _context.Provider;
+  export const Consumer = _context.Consumer;
+  
+  // Helper to use the context
+  export function useContext() {
+    return useContext(_context);
+  }
 }
 
 // SessionProvider component
@@ -45,7 +52,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
 
 // useSession hook
 export function useSession() {
-  return useContext(SessionContext);
+  return SessionContext.useContext();
 }
 
 // Sign in function
