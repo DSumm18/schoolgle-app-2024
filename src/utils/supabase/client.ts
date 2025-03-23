@@ -8,8 +8,22 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
+// Define proper types for session and errors
+export interface SupabaseSession {
+  user: {
+    id: string;
+    email: string;
+    name: string;
+  };
+  expires_at: number;
+}
+
+export interface SupabaseError {
+  message: string;
+}
+
 // Mock session data for demonstration
-const mockSession = {
+const mockSession: SupabaseSession = {
   user: {
     id: 'user-123',
     email: 'user@example.com',
@@ -29,7 +43,10 @@ export const createBrowserClient = () => {
 export const getSession = async () => {
   // In a real app, this would fetch the actual session
   // For demo purposes, we'll just return a mock session
-  return { data: { session: mockSession }, error: null };
+  return { 
+    data: { session: mockSession }, 
+    error: null as SupabaseError | null  // Explicitly type the error
+  };
 };
 
 // Check if user is authenticated
@@ -48,5 +65,5 @@ export const fetchData = async (table: string) => {
     'comments': [{ id: 1, text: 'Comment 1' }, { id: 2, text: 'Comment 2' }],
   };
 
-  return { data: mockData[table as keyof typeof mockData] || [], error: null };
+  return { data: mockData[table as keyof typeof mockData] || [], error: null as SupabaseError | null };
 };
