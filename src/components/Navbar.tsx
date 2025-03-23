@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
-import { AnimatedLogo } from './AnimatedLogo';
+import AnimatedLogo from './AnimatedLogo';
 import { AnimatedButton } from './AnimatedButton';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Moon, Sun, User, LogOut, Settings } from 'lucide-react';
