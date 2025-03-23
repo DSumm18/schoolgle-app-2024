@@ -24,6 +24,12 @@ const SessionContext = createContext<SessionContextType>({
   status: 'unauthenticated'
 })
 
+// Create a namespace for SessionContext to match expected usage with Provider
+// This is needed because the code expects to use SessionContext.Provider
+export namespace SessionContext {
+  export const Provider = SessionContext.Provider;
+}
+
 // Mock version of useSession hook
 export function useSession() {
   const context = useContext(SessionContext)
