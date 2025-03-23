@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext } from 'react'
+import { useState, useEffect, createContext, useContext as reactUseContext } from 'react'
 
 // Define types for our mocked auth system
 export interface User {
@@ -31,14 +31,14 @@ export namespace SessionContext {
   export const Consumer = _context.Consumer
   
   // Helper to use the context
-  export function useContext() {
-    return useContext(_context)
+  export function useSessionContext() {
+    return reactUseContext(_context)
   }
 }
 
 // Mock version of useSession hook
 export function useSession() {
-  return SessionContext.useContext()
+  return SessionContext.useSessionContext()
 }
 
 // Mock version of signIn function
