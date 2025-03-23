@@ -2,7 +2,7 @@
 
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { HoldingPage } from "@/app/components/holding-page";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tab-components";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs-export";
 import { Settings, Users, Shield, Bell, Server } from "lucide-react";
 
 export default function SettingsPage() {
