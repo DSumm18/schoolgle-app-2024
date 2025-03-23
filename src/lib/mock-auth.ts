@@ -13,11 +13,13 @@ export interface Session {
   expires: string
 }
 
-// Create a context for our mock session
-const SessionContext = createContext<{
+interface SessionContextType {
   data: Session | null
   status: 'authenticated' | 'unauthenticated' | 'loading'
-}>({
+}
+
+// Create a context for our mock session
+const SessionContext = createContext<SessionContextType>({
   data: null,
   status: 'unauthenticated'
 })
