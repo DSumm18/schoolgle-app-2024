@@ -23,31 +23,30 @@ export interface SessionContextValue {
   update?: (data?: any) => Promise<Session | null>;
 }
 
-// Create the context directly (no namespace)
-const SessionContextInternal = createContext<SessionContextValue>({
+// Create the context directly
+const InternalContext = createContext<SessionContextValue>({
   data: null,
   status: 'unauthenticated'
 });
 
-// Export the context with its components
-export const SessionContext = {
-  Provider: SessionContextInternal.Provider,
-  Consumer: SessionContextInternal.Consumer
-};
-
-// Helper to use the context
+// Export a helper to use the context
 export function useSessionContext() {
-  return reactUseContext(SessionContextInternal);
+  return reactUseContext(InternalContext);
 }
+
+// Export the SessionContext components in a way that doesn't conflict with namespace
+export const SessionContext = {
+  // Don't try to use these providers directly in JSX, use the SessionProvider component below
+  _provider: InternalContext.Provider,
+  _consumer: InternalContext.Consumer
+};
 
 // SessionProvider component
 export function SessionProvider({ children }: { children: ReactNode }) {
-  // Use the provider directly
-  const ContextProvider = SessionContext.Provider;
-  return (
-    <ContextProvider value={{ data: null, status: 'unauthenticated' }}>
-      {children}
-    </ContextProvider>
+  return React.createElement(
+    InternalContext.Provider,
+    { value: { data: null, status: 'unauthenticated' } },
+    children
   );
 }
 
