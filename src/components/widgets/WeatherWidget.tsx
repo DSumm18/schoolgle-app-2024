@@ -27,8 +27,8 @@ interface WeatherData {
 }
 
 // Mock function to get weather - in a real app, replace with API call
-async function getWeatherData(lat: number, lon: number): Promise<WeatherData> {
-  // In a real app, you would call a weather API here
+async function getWeatherData(): Promise<WeatherData> {
+  // In a real app, you would call a weather API here with lat/lon
   // For demo purposes, returning mock data
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -91,14 +91,10 @@ export default function WeatherWidget() {
 
   useEffect(() => {
     const fetchWeather = async () => {
-      if (!school?.location) return;
-      
       try {
         setIsLoading(true);
-        const data = await getWeatherData(
-          school.location.latitude,
-          school.location.longitude
-        );
+        // Get weather data without requiring school location
+        const data = await getWeatherData();
         setWeather(data);
         setError(null);
       } catch (err) {
@@ -115,7 +111,7 @@ export default function WeatherWidget() {
     const interval = setInterval(fetchWeather, 30 * 60 * 1000);
     
     return () => clearInterval(interval);
-  }, [school]);
+  }, []);
 
   if (isLoading) {
     return (
