@@ -23,10 +23,20 @@ export const createServerClient = () => {
   });
 };
 
+// Define types for the mock data
+type User = { id: number; name: string; email: string };
+type Module = { id: string; name: string; enabled: boolean };
+
+interface MockData {
+  users: User[];
+  modules: Module[];
+  [key: string]: any; // Add index signature to allow string indexing
+}
+
 // Helper function to get database data with authentication
 export const getAuthenticatedData = async (table: string) => {
   // Mock data for demonstration
-  const mockData = {
+  const mockData: MockData = {
     users: [
       { id: 1, name: 'Test User', email: 'test@example.com' }
     ],
