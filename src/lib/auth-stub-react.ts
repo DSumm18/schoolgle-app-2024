@@ -1,4 +1,4 @@
-import { createContext, useContext as reactUseContext, ReactNode } from 'react';
+import React, { createContext, useContext as reactUseContext, ReactNode } from 'react';
 
 // Define session types
 export interface User {
