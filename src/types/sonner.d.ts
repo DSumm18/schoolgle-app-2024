@@ -40,15 +40,20 @@ declare module 'sonner' {
   }
   
   export function toast(message: string | ReactNode, options?: ToastOptions): void;
-  toast.success: (message: string | ReactNode, options?: ToastOptions) => void;
-  toast.error: (message: string | ReactNode, options?: ToastOptions) => void;
-  toast.warning: (message: string | ReactNode, options?: ToastOptions) => void;
-  toast.info: (message: string | ReactNode, options?: ToastOptions) => void;
-  toast.loading: (message: string | ReactNode, options?: ToastOptions) => void;
-  toast.promise: <T>(promise: Promise<T>, options?: {
-    loading?: string | ReactNode;
-    success?: string | ReactNode | ((data: T) => string | ReactNode);
-    error?: string | ReactNode | ((error: any) => string | ReactNode);
-  }) => Promise<T>;
-  toast.dismiss: (id?: string | number) => void;
+  export namespace toast {
+    export function success(message: string | ReactNode, options?: ToastOptions): void;
+    export function error(message: string | ReactNode, options?: ToastOptions): void;
+    export function warning(message: string | ReactNode, options?: ToastOptions): void;
+    export function info(message: string | ReactNode, options?: ToastOptions): void;
+    export function loading(message: string | ReactNode, options?: ToastOptions): void;
+    export function promise<T>(
+      promise: Promise<T>, 
+      options?: {
+        loading?: string | ReactNode;
+        success?: string | ReactNode | ((data: T) => string | ReactNode);
+        error?: string | ReactNode | ((error: any) => string | ReactNode);
+      }
+    ): Promise<T>;
+    export function dismiss(id?: string | number): void;
+  }
 }
