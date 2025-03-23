@@ -1,4 +1,4 @@
-import { createContext, useContext, ReactNode } from 'react';
+import { createContext, useContext as reactUseContext, ReactNode } from 'react';
 
 // Define session types
 export interface User {
@@ -36,8 +36,8 @@ export namespace SessionContext {
   export const Consumer = _context.Consumer;
   
   // Helper to use the context
-  export function useContext() {
-    return useContext(_context);
+  export function useSessionContext() {
+    return reactUseContext(_context);
   }
 }
 
@@ -52,7 +52,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
 
 // useSession hook
 export function useSession() {
-  return SessionContext.useContext();
+  return SessionContext.useSessionContext();
 }
 
 // Sign in function
