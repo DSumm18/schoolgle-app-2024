@@ -220,7 +220,7 @@ export default function TrustTab() {
   
   // Process CSV data based on the actual format from SCHOOLGLE/src/app/admin/Trust_Import.csv
   const processCSV = (csvData: string): TrustData[] => {
-    const lines = csvData.split('\n');
+    const lines = csvData.split('\\n');
     if (lines.length < 2) {
       throw new Error('CSV file must contain at least a header row and a data row');
     }
@@ -228,14 +228,14 @@ export default function TrustTab() {
     // Extract headers (first line)
     const headerLine = lines[0];
     const headers = headerLine.split(',').map(header => 
-      header.replace(/^\"/, '').replace(/\"$/, '').trim()
+      header.replace(/^\\"/, '').replace(/\\"$/, '').trim()
     );
     
     // Create a mapping from CSV headers to our data model
     const fieldMapping: Record<string, keyof TrustData | null> = {
       'Group name': 'trustName',
       'Group id': 'groupId',
-      'Group id': 'trustCode', // Mapping multiple headers to same field
+      'Trust code': 'trustCode', // Fixed: renamed to make keys unique
       'Group Street': 'address',
       'Group Town': 'city',
       'Group County': 'county',
@@ -284,7 +284,7 @@ export default function TrustTab() {
       headers.forEach((header, index) => {
         const mappedField = fieldMapping[header];
         if (mappedField && index < values.length) {
-          const value = values[index].replace(/^\"/, '').replace(/\"$/, '');
+          const value = values[index].replace(/^\\"/, '').replace(/\\"$/, '');
           
           // Handle numeric fields
           if (mappedField === 'numberOfSchools') {
@@ -326,7 +326,7 @@ export default function TrustTab() {
     const csvContent = [
       headerRow.join(','),
       sampleRow.join(',')
-    ].join('\n');
+    ].join('\\n');
     
     // Create and download file
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
