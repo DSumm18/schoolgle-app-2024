@@ -4,6 +4,11 @@ import { useState, useEffect } from 'react';
 import { supabase, getSession } from '@/utils/supabase/client';
 import { useSession } from 'next-auth/react';
 
+// Define error type to fix TypeScript error
+interface SupabaseError {
+  message: string;
+}
+
 export default function AuthStatus() {
   const { data: session, status: authStatus } = useSession();
   const [dbStatus, setDbStatus] = useState<'loading' | 'connected' | 'error'>('loading');
@@ -44,7 +49,11 @@ export default function AuthStatus() {
       
       if (error) {
         console.error('Supabase client error:', error);
-        return { success: false, message: error.message };
+        // Convert error to string if it doesn't have a message property
+        const errorMessage = typeof error === 'object' && error !== null && 'message' in error 
+          ? (error as SupabaseError).message 
+          : String(error);
+        return { success: false, message: errorMessage };
       }
       
       return { 
