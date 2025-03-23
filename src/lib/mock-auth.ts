@@ -18,27 +18,26 @@ interface SessionContextType {
   status: 'authenticated' | 'unauthenticated' | 'loading'
 }
 
-// Create a namespace for SessionContext with its implementation inside
-export namespace SessionContext {
-  // Internal context
-  const _context = createContext<SessionContextType>({
-    data: null,
-    status: 'unauthenticated'
-  })
-  
-  // Export Provider and Consumer
-  export const Provider = _context.Provider
-  export const Consumer = _context.Consumer
-  
-  // Helper to use the context
-  export function useSessionContext() {
-    return reactUseContext(_context)
-  }
+// Create the context directly (no namespace)
+const SessionContextInternal = createContext<SessionContextType>({
+  data: null,
+  status: 'unauthenticated'
+})
+
+// Export the context with its components
+export const SessionContext = {
+  Provider: SessionContextInternal.Provider,
+  Consumer: SessionContextInternal.Consumer
+}
+
+// Helper to use the context
+export function useSessionContext() {
+  return reactUseContext(SessionContextInternal)
 }
 
 // Mock version of useSession hook
 export function useSession() {
-  return SessionContext.useSessionContext()
+  return useSessionContext()
 }
 
 // Mock version of signIn function
@@ -95,9 +94,11 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
     }
   }, [])
   
+  // Use the provider directly
+  const ContextProvider = SessionContext.Provider
   return (
-    <SessionContext.Provider value={{ data: session, status }}>
+    <ContextProvider value={{ data: session, status }}>
       {children}
-    </SessionContext.Provider>
+    </ContextProvider>
   )
 }
