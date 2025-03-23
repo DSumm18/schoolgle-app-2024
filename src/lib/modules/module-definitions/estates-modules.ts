@@ -1,5 +1,5 @@
 import { ModuleDefinition } from '../types';
-import { ActivitySquare, FileWarning, AlertTriangle, FileAlert } from 'lucide-react';
+import { ActivitySquare, FileWarning, AlertTriangle, AlertCircle } from 'lucide-react';
 
 // Activity Management System module definition
 export const activityManagementModule: ModuleDefinition = {
@@ -222,7 +222,7 @@ export const incidentsModule: ModuleDefinition = {
   author: 'Schoolgle',
   category: 'estates',
   color: '#F44336', // Red
-  icon: 'FileAlert',
+  icon: 'AlertCircle',
   enabled: false,
   required: false,
   routes: [
