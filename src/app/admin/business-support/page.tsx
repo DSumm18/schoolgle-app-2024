@@ -3,7 +3,7 @@
 import { PageWrapper } from "@/components/layout/page-wrapper";
 import { HoldingPage } from "@/app/components/holding-page";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tab-solution";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs-export";
 import { FileText, Calendar, UserCheck, Settings } from "lucide-react";
 import Link from "next/link";
 
