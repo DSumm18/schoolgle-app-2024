@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from '@/lib/motion';
 import { PageWrapper } from '@/components/layout/page-wrapper';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tab-solution';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import UsersTab from '@/components/admin/users-tab';
 import TrustTab from '@/components/admin/trust-tab';
