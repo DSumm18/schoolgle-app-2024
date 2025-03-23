@@ -1,12 +1,32 @@
 // Mock next-auth/react implementation for static sites
+import React from 'react'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect, createContext, useContext } from 'react'
 
-// Session context for the mock implementation
-const SessionContext = createContext<any>(null)
+// Define the session context type
+interface SessionContextType {
+  user?: {
+    id?: string;
+    name?: string;
+    email?: string;
+    [key: string]: any;
+  };
+  expires?: string;
+  [key: string]: any;
+}
+
+// Create internal context
+const InternalSessionContext = createContext<SessionContextType | null>(null)
+
+// Export the context with its provider
+export const SessionContext = {
+  // These are not meant to be used directly in JSX
+  _provider: InternalSessionContext.Provider,
+  _consumer: InternalSessionContext.Consumer
+}
 
 export function useSession() {
-  const session = useContext(SessionContext)
+  const session = useContext(InternalSessionContext)
   return {
     data: session,
     status: session ? 'authenticated' : 'unauthenticated',
@@ -29,7 +49,7 @@ export function signOut() {
 }
 
 export function SessionProvider({ children }: { children: React.ReactNode }) {
-  const [session, setSession] = useState<any>(null)
+  const [session, setSession] = useState<SessionContextType | null>(null)
   
   // Check local storage on client for session data
   useEffect(() => {
@@ -45,9 +65,10 @@ export function SessionProvider({ children }: { children: React.ReactNode }) {
     }
   }, [])
 
-  return (
-    <SessionContext.Provider value={session}>
-      {children}
-    </SessionContext.Provider>
+  // Use React.createElement to avoid JSX type errors with components stored in variables
+  return React.createElement(
+    InternalSessionContext.Provider,
+    { value: session },
+    children
   )
 }
